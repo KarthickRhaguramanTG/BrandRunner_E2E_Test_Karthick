@@ -272,6 +272,17 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     }
 
     @Override
+    @Step("Type '{1}' into element")
+    public void typeWithoutClear(WebElement ele, String data) {
+        try {
+            ele.sendKeys(data);
+            reportStep("The data " + data + " is entered", "PASS");
+        } catch (Exception e) {
+            reportStep("The data " + data + " could not be entered", "FAIL");
+        }
+    }
+
+    @Override
     public void typeAndEnter(WebElement ele, String data) {
         try {
             ele.clear();
