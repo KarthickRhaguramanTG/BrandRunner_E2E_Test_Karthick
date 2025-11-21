@@ -1,0 +1,12 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">-->
+<!--<suite name="IFC API End to End Suite">-->
+<!--    <test name="Web based API Test">-->
+<!--        <classes>-->
+<!--            <class name="testUtils.BaseApiTest"/>-->
+<!--            <class name="ai.metayb.api.web.EventPerformanceTest"/>-->
+<!--            <class name="ai.metayb.api.web.events.FetchAllEventsTest"/>-->
+<!--            <class name="ai.metayb.api.web.events.FetchEventTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--</suite>-->
