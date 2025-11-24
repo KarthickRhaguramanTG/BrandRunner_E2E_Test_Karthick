@@ -23,6 +23,15 @@ public interface Element {
     public void typeWithoutClear(WebElement ele, String data) ;
 
     /**
+     * This method will enter the value in the given text field by clearing using the keyboard control + A and delect option
+     * @param ele   - The Webelement (text field) in which the data to be entered
+     * @param data  - The data to be sent to the webelement
+     * @author Samuel Manoj
+     * @throws org.openqa.selenium.ElementNotInteractableException if the element is not interactable (e.g., not visible or disabled)
+     */
+    public void typeWithKeyboardClear(WebElement ele, String data) ;
+
+    /**
      * This method will enter the value in the given text field and Submit
      * @param ele   - The Webelement (text field) in which the data to be entered
      * @param data  - The data to be sent to the webelement
