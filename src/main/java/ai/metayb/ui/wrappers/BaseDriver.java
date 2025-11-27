@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-public class BaseDriver implements Browser, Element, Select, TargetLocator {
+public abstract class BaseDriver implements Browser, Element, Select, TargetLocator {
 
     public static RemoteWebDriver driver;
     protected Logger logger;
@@ -246,16 +246,36 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
         }
     }
 
-    //    @Step("{stepDesc}")
+    private String getTestClassName() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if (element.getClassName().endsWith("Test")) {     // Adjust naming if needed
+                try {
+                    return Class.forName(element.getClassName()).getSimpleName();
+                } catch (ClassNotFoundException e) {
+                    return element.getClassName();
+                }
+            }
+        }
+        return this.getClass().getSimpleName();
+    }
+
     public void reportStep(String stepDesc, String status) {
-        logger.info("[Test] - {}", stepDesc);
-        if (status.equalsIgnoreCase("PASS")) {
-            Allure.step(stepDesc, Status.PASSED);
-        } else if (status.equalsIgnoreCase("FAIL")) {
-            attachScreenshot(stepDesc);
-            Allure.step(stepDesc, Status.FAILED);
-        } else {
+        String testClass = getTestClassName();
+        logger.info("[{}] - {}", testClass, stepDesc);
+        if (status == null) {
             Allure.step(stepDesc);
+            return;
+        }
+        switch (status.toUpperCase()) {
+            case "PASS":
+                Allure.step(stepDesc, Status.PASSED);
+                break;
+            case "FAIL":
+                attachScreenshot(stepDesc);
+                Allure.step(stepDesc, Status.FAILED);
+                break;
+            default:
+                Allure.step(stepDesc);
         }
     }
 
@@ -324,9 +344,9 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     public void click(WebElement ele) {
         try {
             ele.click();
-            reportStep("The element is clicked", "PASS");
+            reportStep("The element " + ele.getText() + " clicked", "PASS");
         } catch (Exception e) {
-            reportStep("The element could not be clicked", "FAIL");
+            reportStep("The element " + ele.getText() + " could not be clicked", "FAIL");
         }
     }
 
