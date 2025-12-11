@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-public abstract class BaseDriver implements Browser, Element, Select, TargetLocator {
+public class BaseDriver implements Browser, Element, Select, TargetLocator {
 
     public static RemoteWebDriver driver;
     protected Logger logger;
@@ -82,7 +82,7 @@ public abstract class BaseDriver implements Browser, Element, Select, TargetLoca
         return driver;
     }
 
-    public void WebDriverWait(By ele) {
+    public void waitForElement(By ele) {
         try {
             Thread.sleep(5000); // Wait for 10 seconds
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -246,36 +246,16 @@ public abstract class BaseDriver implements Browser, Element, Select, TargetLoca
         }
     }
 
-    private String getTestClassName() {
-        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
-            if (element.getClassName().endsWith("Test")) {     // Adjust naming if needed
-                try {
-                    return Class.forName(element.getClassName()).getSimpleName();
-                } catch (ClassNotFoundException e) {
-                    return element.getClassName();
-                }
-            }
-        }
-        return this.getClass().getSimpleName();
-    }
-
+    //    @Step("{stepDesc}")
     public void reportStep(String stepDesc, String status) {
-        String testClass = getTestClassName();
-        logger.info("[{}] - {}", testClass, stepDesc);
-        if (status == null) {
+        logger.info("[Test] - {}", stepDesc);
+        if (status.equalsIgnoreCase("PASS")) {
+            Allure.step(stepDesc, Status.PASSED);
+        } else if (status.equalsIgnoreCase("FAIL")) {
+            attachScreenshot(stepDesc);
+            Allure.step(stepDesc, Status.FAILED);
+        } else {
             Allure.step(stepDesc);
-            return;
-        }
-        switch (status.toUpperCase()) {
-            case "PASS":
-                Allure.step(stepDesc, Status.PASSED);
-                break;
-            case "FAIL":
-                attachScreenshot(stepDesc);
-                Allure.step(stepDesc, Status.FAILED);
-                break;
-            default:
-                Allure.step(stepDesc);
         }
     }
 
@@ -303,19 +283,6 @@ public abstract class BaseDriver implements Browser, Element, Select, TargetLoca
     }
 
     @Override
-    @Step("Type '{1}' into element")
-    public void typeWithKeyboardClear(WebElement ele, String data) {
-        try {
-            ele.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-            ele.sendKeys(Keys.DELETE);
-            ele.sendKeys(data);
-            reportStep("The data " + data + " is entered after clearing the row", "PASS");
-        } catch (Exception e) {
-            reportStep("The data " + data + " could not be entered", "FAIL");
-        }
-    }
-
-    @Override
     public void typeAndEnter(WebElement ele, String data) {
         try {
             ele.clear();
@@ -327,26 +294,13 @@ public abstract class BaseDriver implements Browser, Element, Select, TargetLoca
     }
 
     @Override
-    public void typeDownAndEnter(WebElement ele, String data) {
-        try {
-            ele.clear();
-            ele.sendKeys(data);
-            ele.sendKeys(Keys.ARROW_DOWN);
-            ele.sendKeys(Keys.ENTER);
-            reportStep("Typed '" + data + "', navigated down and selected", "PASS");
-        } catch (Exception e) {
-            reportStep("Failed to type '" + data + "' and select using Down + Enter", "FAIL");
-        }
-    }
-
-    @Override
     @Step("Click on element")
     public void click(WebElement ele) {
         try {
             ele.click();
-            reportStep("The element " + ele.getText() + " clicked", "PASS");
+            reportStep("The element is clicked", "PASS");
         } catch (Exception e) {
-            reportStep("The element " + ele.getText() + " could not be clicked", "FAIL");
+            reportStep("The element could not be clicked", "FAIL");
         }
     }
 

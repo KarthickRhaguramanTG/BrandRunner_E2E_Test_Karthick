@@ -1,6 +1,7 @@
 package testUtils;
 
 import ai.metayb.config.ConfigManager;
+import ai.metayb.ui.core.ExcelUtils;
 import ai.metayb.ui.wrappers.BaseDriver;
 import io.qameta.allure.testng.AllureTestNg;
 import org.testng.ITestResult;
@@ -8,7 +9,10 @@ import org.testng.annotations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.Properties;
+
+import static ai.metayb.ui.ExcelUploadTest.results;
 
 @Listeners({AllureTestNg.class})
 public class BaseTest extends BaseDriver {
@@ -60,5 +64,15 @@ public class BaseTest extends BaseDriver {
             getDriver().quit();
         }
     }
-}
 
+    @AfterClass
+    public void writeResultsToExcel() {
+        String outFile = "test-data/test-results.xlsx";
+        try {
+            ExcelUtils.writeExcel(results, outFile, "Results");
+            System.out.println("Results written to " + outFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
