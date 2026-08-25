@@ -4,9 +4,21 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %highlight{%-5level}{FATAL=red blink, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} %logger{36} - %msg%n" disableAnsi="false"/>
         </Console>
-        <File name="FileAppender" fileName="logs/test-log.log">
+        <RollingFile name="FileAppender"
+                     fileName="logs/test-log.log"
+                     filePattern="logs/archive/test-log-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="logs/archive" maxDepth="1">
+                    <IfFileName glob="test-log-*.log.gz"/>
+                    <IfLastModified age="14d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
 
     <Loggers>

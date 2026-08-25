@@ -5,6 +5,7 @@
     <test name="UI Tests">
         <classes>
             <class name="ai.metayb.ui.LoginTest"/>
+            <class name="ai.metayb.ui.ExcelUploadTest"/>
 <!--            <class name="ai.metayb.ui.MainTest"/>-->
         </classes>
     </test>

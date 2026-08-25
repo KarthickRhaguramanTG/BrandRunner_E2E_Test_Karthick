@@ -4,7 +4,6 @@ import ai.metayb.ui.components.LoginPageElements;
 import ai.metayb.ui.core.DataReader;
 import ai.metayb.ui.core.InputReader;
 import ai.metayb.ui.wrappers.BaseDriver;
-import io.qameta.allure.Step;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BaseDriver {
@@ -21,9 +20,8 @@ public class LoginPage extends BaseDriver {
         PageFactory.initElements(getDriver(), elements);
     }
 
-    @Step("Enter email id and password")
     public void enterUserCredentials() {
-        WebDriverWait(elements.getEmailAddressLocator());
+        waitForElement(elements.getEmailAddressLocator());
         type(elements.getTxtEmailAddress(), data.emailAddress);
         type(elements.getTxtPassword(), data.password);
         click(elements.getBtnLogin());

@@ -15,8 +15,8 @@ public class LoginTest extends BaseTest {
     @Description("This test verifies that a user can log in adn see the dashboard in IFC application.")
     public void userLoginTest() {
         logger.info("[Test] - Starting userLoginTest");
-        logger.info("Page Title: {}", driver.getTitle());
-        logger.info("Current URL : {}", driver.getCurrentUrl());
+        logger.info("Page Title: {}", getDriver().getTitle());
+        logger.info("Current URL : {}", getDriver().getCurrentUrl());
 
         LoginPage login = new LoginPage();
 

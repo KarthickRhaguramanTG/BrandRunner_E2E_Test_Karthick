@@ -3,7 +3,6 @@ package ai.metayb.ui.wrappers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import io.qameta.allure.model.Status;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +29,7 @@ import java.util.Set;
 
 public class BaseDriver implements Browser, Element, Select, TargetLocator {
 
-    public static RemoteWebDriver driver;
+    private static final ThreadLocal<RemoteWebDriver> driverThreadLocal = new ThreadLocal<>();
     protected Logger logger;
 
     public BaseDriver() {
@@ -40,6 +39,7 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public boolean startApp(String browser, String url) {
         try {
+            RemoteWebDriver newDriver;
             switch (browser.toLowerCase()) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
@@ -49,47 +49,51 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
                     chromeOptions.addArguments("--disable-dev-shm-usage");
                     chromeOptions.setAcceptInsecureCerts(true); // for HTTPS issues
                     chromeOptions.addArguments("--remote-allow-origins=*");
-                    driver = new ChromeDriver(chromeOptions);
+                    // Isolated profile per run so this doesn't collide with an already-running
+                    // Chrome instance on the same machine (shared default profile/singleton lock).
+                    chromeOptions.addArguments("--user-data-dir=" +
+                            java.nio.file.Files.createTempDirectory("chrome-profile-").toAbsolutePath());
+                    newDriver = new ChromeDriver(chromeOptions);
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
+                    newDriver = new FirefoxDriver();
                     break;
                 case "ie":
                     WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
+                    newDriver = new InternetExplorerDriver();
                     break;
                 case "edge":
+                    WebDriverManager.edgedriver().setup();
                     EdgeOptions options = new EdgeOptions();
-                    driver = new EdgeDriver(options);
+                    newDriver = new EdgeDriver(options);
                     break;
                 default:
                     System.err.println("This browser " + browser + " is not supported");
                     return false;
             }
-            driver.get(url);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-            driver.manage().window().maximize();
+            driverThreadLocal.set(newDriver);
+            newDriver.get(url);
+            newDriver.manage().window().maximize();
             reportStep("The browser " + browser + " launched successfully", "PASS");
             return true;
         } catch (Exception e) {
-            reportStep("The browser " + browser + " could not be launched", "FAIL");
+            reportStep("The browser " + browser + " could not be launched: " + e.getMessage(), "FAIL");
             return false;
         }
     }
 
-    public RemoteWebDriver getDriver() {
-        return driver;
+    public static RemoteWebDriver getDriver() {
+        return driverThreadLocal.get();
     }
 
     public void waitForElement(By ele) {
         try {
-            Thread.sleep(5000); // Wait for 10 seconds
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
             wait.until(ExpectedConditions.visibilityOfElementLocated(ele));
-            reportStep("Waited for " + 10 + " seconds for the element to be present", "PASS");
+            reportStep("Waited for the element to be present", "PASS");
         } catch (Exception e) {
-            reportStep("Could not wait for the element to be present", "FAIL");
+            reportStep("Could not wait for the element to be present: " + e.getMessage(), "FAIL");
         }
     }
 
@@ -98,21 +102,21 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
         try {
             switch (locator.toLowerCase()) {
                 case "id":
-                    return driver.findElement(By.id(locValue));
+                    return getDriver().findElement(By.id(locValue));
                 case "name":
-                    return driver.findElement(By.name(locValue));
+                    return getDriver().findElement(By.name(locValue));
                 case "class":
-                    return driver.findElement(By.className(locValue));
+                    return getDriver().findElement(By.className(locValue));
                 case "xpath":
-                    return driver.findElement(By.xpath(locValue));
+                    return getDriver().findElement(By.xpath(locValue));
                 case "css":
-                    return driver.findElement(By.cssSelector(locValue));
+                    return getDriver().findElement(By.cssSelector(locValue));
                 case "linktext":
-                    return driver.findElement(By.linkText(locValue));
+                    return getDriver().findElement(By.linkText(locValue));
                 case "partiallinktext":
-                    return driver.findElement(By.partialLinkText(locValue));
+                    return getDriver().findElement(By.partialLinkText(locValue));
                 case "tagname":
-                    return driver.findElement(By.tagName(locValue));
+                    return getDriver().findElement(By.tagName(locValue));
                 default:
                     reportStep("The locator " + locator + " is not supported", "FAIL");
                     return null;
@@ -125,116 +129,122 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
 
     @Override
     public boolean verifyExactTitle(String expectedTitle) {
-        String actualTitle = driver.getTitle();
+        String actualTitle = getDriver().getTitle();
         if (actualTitle.equals(expectedTitle)) {
             reportStep("The title " + expectedTitle + " is verified", "PASS");
             return true;
         }
+        reportStep("The title " + expectedTitle + " is not verified. Actual: " + actualTitle, "FAIL");
         return false;
     }
 
     @Override
     public boolean verifyPartialTitle(String expectedTitle) {
-        String actualTitle = driver.getTitle();
+        String actualTitle = getDriver().getTitle();
         if (actualTitle.contains(expectedTitle)) {
             reportStep("The title " + expectedTitle + " is verified", "PASS");
             return true;
         }
+        reportStep("The title " + expectedTitle + " is not verified. Actual: " + actualTitle, "FAIL");
         return false;
     }
 
     @Override
     public void closeActiveBrowser() {
         try {
-            driver.close();
+            getDriver().close();
             reportStep("The active browser is closed", "PASS");
         } catch (Exception e) {
-            reportStep("The active browser could not be closed", "FAIL");
+            reportStep("The active browser could not be closed: " + e.getMessage(), "FAIL");
         } finally {
-            driver = null;
+            driverThreadLocal.remove();
         }
     }
 
     @Override
     public void closeAllBrowsers() {
         try {
-            driver.quit();
+            getDriver().quit();
             reportStep("All browsers are closed", "PASS");
         } catch (Exception e) {
-            reportStep("All browsers could not be closed", "FAIL");
+            reportStep("All browsers could not be closed: " + e.getMessage(), "FAIL");
+        } finally {
+            driverThreadLocal.remove();
         }
     }
 
     @Override
     public void quitBrowser() {
         try {
-            driver.quit();
+            getDriver().quit();
             reportStep("The browser is quit", "PASS");
         } catch (Exception e) {
-            reportStep("The browser could not be quit", "FAIL");
+            reportStep("The browser could not be quit: " + e.getMessage(), "FAIL");
+        } finally {
+            driverThreadLocal.remove();
         }
     }
 
     @Override
     public void switchToWindow(int index) {
         try {
-            Set<String> windowHandles = driver.getWindowHandles();
+            Set<String> windowHandles = getDriver().getWindowHandles();
             List<String> allWindows = new ArrayList<>(windowHandles);
-            driver.switchTo().window(allWindows.get(index));
+            getDriver().switchTo().window(allWindows.get(index));
             reportStep("The window of index " + index + " switched", "PASS");
         } catch (Exception e) {
-            reportStep("The window of index " + index + " could not be switched", "FAIL");
+            reportStep("The window of index " + index + " could not be switched: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
     public void switchToFrame(WebElement ele) {
         try {
-            driver.switchTo().frame(ele);
+            getDriver().switchTo().frame(ele);
             reportStep("Switched to the frame", "PASS");
         } catch (Exception e) {
-            reportStep("Could not switch to the frame", "FAIL");
+            reportStep("Could not switch to the frame: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
     public void acceptAlert() {
         try {
-            driver.switchTo().alert().accept();
+            getDriver().switchTo().alert().accept();
             reportStep("Alert accepted", "PASS");
         } catch (Exception e) {
-            reportStep("Alert could not be accepted", "FAIL");
+            reportStep("Alert could not be accepted: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
     public void dismissAlert() {
         try {
-            driver.switchTo().alert().dismiss();
+            getDriver().switchTo().alert().dismiss();
             reportStep("Alert dismissed", "PASS");
         } catch (Exception e) {
-            reportStep("Alert could not be dismissed", "FAIL");
+            reportStep("Alert could not be dismissed: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
     public String getAlertText() {
         try {
-            String text = driver.switchTo().alert().getText();
+            String text = getDriver().switchTo().alert().getText();
             reportStep("Alert text: " + text, "INFO");
             return text;
         } catch (Exception e) {
-            reportStep("Could not get alert text", "FAIL");
+            reportStep("Could not get alert text: " + e.getMessage(), "FAIL");
             return "";
         }
     }
 
     @Attachment(value = "Screenshot", type = "image/png")
     public byte[] attachScreenshot(String stepDesc) {
-        if(driver != null) {
+        if(getDriver() != null) {
             try {
-                File src = driver.getScreenshotAs(OutputType.FILE);
-                byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);
+                File src = getDriver().getScreenshotAs(OutputType.FILE);
+                byte[] screenshot = getDriver().getScreenshotAs(OutputType.BYTES);
                 Allure.addAttachment(stepDesc, new ByteArrayInputStream(screenshot));
                 return FileUtils.readFileToByteArray(src);
             } catch (IOException e) {
@@ -246,7 +256,6 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
         }
     }
 
-    //    @Step("{stepDesc}")
     public void reportStep(String stepDesc, String status) {
         logger.info("[Test] - {}", stepDesc);
         if (status.equalsIgnoreCase("PASS")) {
@@ -254,31 +263,30 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
         } else if (status.equalsIgnoreCase("FAIL")) {
             attachScreenshot(stepDesc);
             Allure.step(stepDesc, Status.FAILED);
+            throw new AssertionError(stepDesc);
         } else {
             Allure.step(stepDesc);
         }
     }
 
     @Override
-    @Step("Type '{1}' into element")
     public void type(WebElement ele, String data) {
         try {
             ele.clear();
             ele.sendKeys(data);
             reportStep("The data " + data + " is entered", "PASS");
         } catch (Exception e) {
-            reportStep("The data " + data + " could not be entered", "FAIL");
+            reportStep("The data " + data + " could not be entered: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
-    @Step("Type '{1}' into element")
     public void typeWithoutClear(WebElement ele, String data) {
         try {
             ele.sendKeys(data);
             reportStep("The data " + data + " is entered", "PASS");
         } catch (Exception e) {
-            reportStep("The data " + data + " could not be entered", "FAIL");
+            reportStep("The data " + data + " could not be entered: " + e.getMessage(), "FAIL");
         }
     }
 
@@ -289,18 +297,17 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
             ele.sendKeys(data, Keys.ENTER);
             reportStep("The data " + data + " is entered and submitted", "PASS");
         } catch (Exception e) {
-            reportStep("The data " + data + " could not be entered and submitted", "FAIL");
+            reportStep("The data " + data + " could not be entered and submitted: " + e.getMessage(), "FAIL");
         }
     }
 
     @Override
-    @Step("Click on element")
     public void click(WebElement ele) {
         try {
             ele.click();
             reportStep("The element is clicked", "PASS");
         } catch (Exception e) {
-            reportStep("The element could not be clicked", "FAIL");
+            reportStep("The element could not be clicked: " + e.getMessage(), "FAIL");
         }
     }
 
@@ -311,7 +318,7 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
             reportStep("The text is: " + text, "INFO");
             return text;
         } catch (Exception e) {
-            reportStep("Could not get the text", "FAIL");
+            reportStep("Could not get the text: " + e.getMessage(), "FAIL");
             return "";
         }
     }
@@ -339,20 +346,20 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public void verifyExactAttribute(WebElement ele, String attribute, String value) {
         String actualValue = ele.getDomAttribute(attribute);
-        if (actualValue.equals(value)) {
+        if (value.equals(actualValue)) {
             reportStep("The attribute " + attribute + " with value " + value + " is verified", "PASS");
         } else {
-            reportStep("The attribute " + attribute + " with value " + value + " is not verified", "FAIL");
+            reportStep("The attribute " + attribute + " with value " + value + " is not verified. Actual: " + actualValue, "FAIL");
         }
     }
 
     @Override
     public void verifyPartialAttribute(WebElement ele, String attribute, String value) {
         String actualValue = ele.getDomAttribute(attribute);
-        if (actualValue.contains(value)) {
+        if (actualValue != null && actualValue.contains(value)) {
             reportStep("The attribute " + attribute + " with value " + value + " is verified", "PASS");
         } else {
-            reportStep("The attribute " + attribute + " with value " + value + " is not verified", "FAIL");
+            reportStep("The attribute " + attribute + " with value " + value + " is not verified. Actual: " + actualValue, "FAIL");
         }
     }
 
@@ -377,44 +384,41 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public void selectDropDownUsingVisibleText(WebElement ele, String value) {
         try {
-            ele.click();
-            ele.sendKeys(value);
-            reportStep("The dropdown is selected with value: " + value, "PASS");
+            new org.openqa.selenium.support.ui.Select(ele).selectByVisibleText(value);
+            reportStep("The dropdown is selected with visible text: " + value, "PASS");
         } catch (Exception e) {
-            reportStep("The dropdown could not be selected with value: " + value, "FAIL");
+            reportStep("The dropdown could not be selected with visible text: " + value + " (" + e.getMessage() + ")", "FAIL");
         }
     }
 
     @Override
     public void selectDropDownUsingValue(WebElement ele, String value) {
         try {
-            ele.click();
-            ele.sendKeys(value);
+            new org.openqa.selenium.support.ui.Select(ele).selectByValue(value);
             reportStep("The dropdown is selected with value: " + value, "PASS");
         } catch (Exception e) {
-            reportStep("The dropdown could not be selected with value: " + value, "FAIL");
+            reportStep("The dropdown could not be selected with value: " + value + " (" + e.getMessage() + ")", "FAIL");
         }
     }
 
     @Override
     public void selectDropDownUsingIndex(WebElement ele, int index) {
         try {
-            ele.click();
-            ele.sendKeys(String.valueOf(index));
+            new org.openqa.selenium.support.ui.Select(ele).selectByIndex(index);
             reportStep("The dropdown is selected with index: " + index, "PASS");
         } catch (Exception e) {
-            reportStep("The dropdown could not be selected with index: " + index, "FAIL");
+            reportStep("The dropdown could not be selected with index: " + index + " (" + e.getMessage() + ")", "FAIL");
         }
     }
 
     @Override
     public String getSelectedValue(WebElement ele) {
         try {
-            String selectedValue = ele.getAttribute("value");
+            String selectedValue = new org.openqa.selenium.support.ui.Select(ele).getFirstSelectedOption().getAttribute("value");
             reportStep("The selected value is: " + selectedValue, "INFO");
             return selectedValue;
         } catch (Exception e) {
-            reportStep("Could not get the selected value", "FAIL");
+            reportStep("Could not get the selected value: " + e.getMessage(), "FAIL");
             return "";
         }
     }
@@ -422,11 +426,11 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public String getSelectedVisibleText(WebElement ele) {
         try {
-            String selectedText = ele.getText();
+            String selectedText = new org.openqa.selenium.support.ui.Select(ele).getFirstSelectedOption().getText();
             reportStep("The selected visible text is: " + selectedText, "INFO");
             return selectedText;
         } catch (Exception e) {
-            reportStep("Could not get the selected visible text", "FAIL");
+            reportStep("Could not get the selected visible text: " + e.getMessage(), "FAIL");
             return "";
         }
     }
@@ -434,11 +438,12 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public int getSelectedIndex(WebElement ele) {
         try {
-            int selectedIndex = Integer.parseInt(ele.getAttribute("selectedIndex"));
+            org.openqa.selenium.support.ui.Select select = new org.openqa.selenium.support.ui.Select(ele);
+            int selectedIndex = select.getOptions().indexOf(select.getFirstSelectedOption());
             reportStep("The selected index is: " + selectedIndex, "INFO");
             return selectedIndex;
         } catch (Exception e) {
-            reportStep("Could not get the selected index", "FAIL");
+            reportStep("Could not get the selected index: " + e.getMessage(), "FAIL");
             return 0;
         }
     }
@@ -446,19 +451,18 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     @Override
     public int getAllOptions(WebElement ele) {
         try {
-            List<WebElement> options = ele.findElements(By.tagName("option"));
-            int allOptions = options.size();
+            int allOptions = new org.openqa.selenium.support.ui.Select(ele).getOptions().size();
             reportStep("The total number of options is: " + allOptions, "INFO");
             return allOptions;
         } catch (Exception e) {
-            reportStep("Could not get the total number of options", "FAIL");
+            reportStep("Could not get the total number of options: " + e.getMessage(), "FAIL");
             return 0;
         }
     }
 
     public void assertPopupMessage(String expectedMessage) {
         try {
-            WebElement toast = driver.findElement(By.xpath("//div[text()='" + expectedMessage + "']"));
+            WebElement toast = getDriver().findElement(By.xpath("//div[text()='" + expectedMessage + "']"));
             if (toast.isDisplayed()) {
                 reportStep("Popup message is displayed: " + expectedMessage, "PASS");
             } else {

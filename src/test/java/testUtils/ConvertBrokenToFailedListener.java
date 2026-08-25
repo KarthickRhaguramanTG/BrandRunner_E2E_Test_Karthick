@@ -1,5 +1,6 @@
 package testUtils;
 
+import ai.metayb.ui.wrappers.BaseDriver;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -9,7 +10,6 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 
 /**
  * Convert unexpected Throwables into AssertionError so TestNG reports FAILURE instead of BROKEN in Allure.
@@ -21,24 +21,10 @@ import java.lang.reflect.Field;
  */
 public class ConvertBrokenToFailedListener implements ITestListener {
 
-    // Helper: try to fetch WebDriver instance by reflecting on the test instance fields
+    // The WebDriver lives in BaseDriver's ThreadLocal, not as a plain field on the test
+    // instance, so fetch it directly instead of reflecting over fields.
     private WebDriver extractWebDriver(Object testInstance) {
-        if (testInstance == null) return null;
-        Class<?> cls = testInstance.getClass();
-        // Look for common field names or any field assignable to WebDriver
-        while (cls != null) {
-            for (Field f : cls.getDeclaredFields()) {
-                try {
-                    f.setAccessible(true);
-                    Object val = f.get(testInstance);
-                    if (val instanceof WebDriver) {
-                        return (WebDriver) val;
-                    }
-                } catch (IllegalAccessException ignored) { }
-            }
-            cls = cls.getSuperclass();
-        }
-        return null;
+        return BaseDriver.getDriver();
     }
 
     private void attachScreenshotAndSource(WebDriver driver) {

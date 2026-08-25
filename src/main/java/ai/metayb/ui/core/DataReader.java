@@ -28,4 +28,7 @@ public class DataReader {
 
     public final String emailAddress = prop.getProperty("emailAddress");
     public final String password = prop.getProperty("password");
+
+    public final String apiEmail = prop.getProperty("apiEmail");
+    public final String apiPassword = prop.getProperty("apiPassword");
 }
