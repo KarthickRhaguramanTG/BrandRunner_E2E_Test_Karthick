@@ -19,10 +19,21 @@
     <dependencies>
         <!-- Selenium -->
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <!-- Bumped from 4.35.0: io.appium:java-client 10.1.1 requires selenium-api/
+             selenium-remote-driver/selenium-support >= 4.42.0 (verified against its
+             published POM). 4.42.0 is the minimum that satisfies that floor. -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.35.0</version>
+            <version>4.42.0</version>
+        </dependency>
+
+        <!-- Appium (mobile automation) -->
+        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>10.1.1</version>
         </dependency>
 
         <!-- WebDriverManager -->
@@ -213,5 +224,47 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <profiles>
+        <!-- Mobile tests are opt-in only: default `mvn test` is untouched and
+             keeps running testng-ui.xml. This profile activates automatically
+             whenever -DexecutionTarget=... is passed (every mobile invocation
+             sets it - emulator/physical/browserstack), so both of these work
+             identically without requiring -Pmobile:
+               mvn test -Dplatform=android -DexecutionTarget=emulator
+               mvn test -Pmobile -Dplatform=android -DexecutionTarget=emulator -->
+        <profile>
+            <id>mobile</id>
+            <activation>
+                <property>
+                    <name>executionTarget</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.1.2</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng/testng-mobile.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <allure.results.directory>target/allure-results</allure.results.directory>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-testng</artifactId>
+                                <version>3.1.2</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

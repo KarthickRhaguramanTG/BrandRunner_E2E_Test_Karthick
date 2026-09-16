@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mobile Automation Suite">
+
+    <test name="Mobile Smoke Tests">
+        <!-- No <groups><run><include .../></run></groups> filter here on purpose:
+             confirmed by direct reproduction that such a filter causes TestNG to
+             silently never invoke @BeforeClass (MobileBaseTest.setUpMobileDriver)
+             for every class in this <test> block, since that configuration method
+             carries no explicit "groups" of its own. All @Test methods below are
+             already tagged groups="mobile-smoke", so the filter was redundant even
+             before it was found to cause this problem. -->
+        <classes>
+            <class name="ai.metayb.mobile.tests.AndroidEnvironmentSmokeTest"/>
+            <class name="ai.metayb.mobile.tests.MobileSmokeTest"/>
+            <class name="ai.metayb.mobile.tests.AppLifecycleAndOrientationSmokeTest"/>
+        </classes>
+    </test>
+
+    <!-- AllureTestNg and MobileTestListener are already registered via
+         MobileBaseTest's @Listeners - not repeated here to avoid the
+         "duplicate listener" warning. -->
+
+</suite>
