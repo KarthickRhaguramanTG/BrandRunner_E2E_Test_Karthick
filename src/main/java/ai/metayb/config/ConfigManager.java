@@ -25,6 +25,10 @@ public class ConfigManager {
         return props.getProperty("api.base.url");
     }
 
+    public static String getApiTenant() {
+        return props.getProperty("api.tenant");
+    }
+
 
     // UI Configurations
     public static String getBrowser() {

@@ -14,6 +14,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.27.0</allure.version>
         <allure.maven.version>2.11.2</allure.maven.version>
+        <!-- Default suite for plain `mvn test` - unchanged from before. Override with
+             -DsuiteXmlFile=src/test/resources/testng/testng-api.xml (or testng-mobile.xml's
+             own -DexecutionTarget=... profile) to run a different suite independently. -->
+        <suiteXmlFile>src/test/resources/testng/testng-ui.xml</suiteXmlFile>
     </properties>
 
     <dependencies>
@@ -180,7 +184,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng/testng-ui.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>target/allure-results</allure.results.directory>

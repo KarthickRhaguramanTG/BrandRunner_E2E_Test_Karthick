@@ -1,19 +1,17 @@
-<!--
-    API suite is disabled until real API test classes exist. testUtils.BaseApiTest is now a
-    working base (see src/test/java/testUtils/BaseApiTest.java) but has no @Test methods of its
-    own, so a suite containing only that class would report "no tests found". Add your API test
-    classes below (extending BaseApiTest), then uncomment this suite and wire it into pom.xml's
-    surefire <suiteXmlFiles> alongside testng-ui.xml.
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- BrandRunners Web API suite. Source of truth: "BrandRunners Web APIs" Postman collection.
+     Run independently of testng-ui.xml/testng-mobile.xml, e.g.:
+       mvn clean test -DsuiteXmlFile=src/test/resources/testng/testng-api.xml -->
+<suite name="BrandRunners API Suite">
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-    <suite name="IFC API End to End Suite">
-        <test name="Web based API Test">
-            <classes>
-                <class name="testUtils.BaseApiTest"/>
-                <!-- <class name="ai.metayb.api.web.events.FetchAllEventsTest"/> -->
-                <!-- <class name="ai.metayb.api.web.events.FetchEventTest"/> -->
-            </classes>
-        </test>
-    </suite>
--->
+    <test name="API Tests">
+        <classes>
+            <class name="ai.metayb.api.auth.LoginApiTest"/>
+        </classes>
+    </test>
+
+    <!-- AllureTestNg is already registered via BaseApiTest's @Listeners - not repeated
+         here to avoid the "duplicate listener" warning (same pattern as testng-mobile.xml). -->
+
+</suite>
