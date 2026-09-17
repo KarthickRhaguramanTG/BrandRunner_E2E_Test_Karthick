@@ -1,15 +1,12 @@
 package testUtils;
 
+import ai.metayb.api.utils.SanitizedApiLoggingFilter;
 import ai.metayb.config.ConfigManager;
 import ai.metayb.ui.core.DataReader;
 import ai.metayb.utils.PerformanceRecorder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.testng.AllureTestNg;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.config.LogConfig;
-import io.restassured.config.RestAssuredConfig;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
@@ -29,18 +26,16 @@ public class BaseApiTest {
 
     private static final Logger logger = LogManager.getLogger(BaseApiTest.class);
 
-    // Authorization carries the bearer token, Cookie/Set-Cookie carry accessToken/csrf -
-    // none of these may appear in plain text in console output or Allure attachments.
-    // RestAssured's blacklistHeader still logs the header name but replaces its value.
-    private static final RestAssuredConfig SANITIZED_LOG_CONFIG = RestAssuredConfig.config()
-            .logConfig(LogConfig.logConfig()
-                    .blacklistHeader("Authorization")
-                    .blacklistHeader("Cookie")
-                    .blacklistHeader("Set-Cookie"));
-
     protected static final PerformanceRecorder perfRecorder = new PerformanceRecorder();
     protected static String baseURI;
     protected static String authToken;
+    // businessInfo is an array in the real response (BrandRunners supports multiple business
+    // units per user) - this is the first/default one, needed as the "business_unit" header
+    // every session/profile endpoint in "00. Auth & Session" requires.
+    protected static String businessUnitId;
+    // Captured for RefreshTokenApiTest's positive scenario - confirmed safe to reuse across
+    // the whole suite: this API does not rotate/invalidate tokens on refresh (verified live).
+    protected static String refreshToken;
     protected static RequestSpecification requestSpecification;
     protected static RequestSpecification noAuthRequestSpecification;
 
@@ -58,23 +53,22 @@ public class BaseApiTest {
         if (authToken == null || authToken.isEmpty()) {
             throw new RuntimeException("Login failed - no accessToken cookie in response. Full response:\n" + loginResponse.asString());
         }
+        refreshToken = loginResponse.getCookie("refreshToken");
+        businessUnitId = loginResponse.jsonPath().getString("data.user.businessInfo[0].id");
         logger.info("Auth token acquired successfully.");
 
         requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(baseURI)
-                .setConfig(SANITIZED_LOG_CONFIG)
                 .addHeader("X-Amz-Tenant-Id", ConfigManager.getApiTenant())
                 .addHeader("Authorization", "Bearer " + authToken)
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+                .addHeader("business_unit", businessUnitId)
+                .addFilter(new SanitizedApiLoggingFilter())
                 .build();
 
         noAuthRequestSpecification = new RequestSpecBuilder()
                 .setBaseUri(baseURI)
-                .setConfig(SANITIZED_LOG_CONFIG)
                 .addHeader("X-Amz-Tenant-Id", ConfigManager.getApiTenant())
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+                .addFilter(new SanitizedApiLoggingFilter())
                 .build();
     }
 
@@ -94,7 +88,7 @@ public class BaseApiTest {
      */
     protected static Response performLogin(String email, String password) throws Exception {
         return given()
-                .config(SANITIZED_LOG_CONFIG)
+                .filter(new SanitizedApiLoggingFilter())
                 .baseUri(baseURI)
                 .header("X-Amz-Tenant-Id", ConfigManager.getApiTenant())
                 .contentType("application/json")

@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- BrandRunners Web API suite. Source of truth: "BrandRunners Web APIs" Postman collection.
+     Currently covers ONLY the "00. Auth & Session" folder (Phase 2E) - do not add other
+     folders here until they go through the same analysis/verification process.
      Run independently of testng-ui.xml/testng-mobile.xml, e.g.:
        mvn clean test -DsuiteXmlFile=src/test/resources/testng/testng-api.xml -->
 <suite name="BrandRunners API Suite">
 
-    <test name="API Tests">
+    <test name="00. Auth &amp; Session">
         <classes>
-            <class name="ai.metayb.api.auth.LoginApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.LoginApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.RefreshTokenApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.LogoutApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.ForgotPasswordApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.ResetPasswordApiTest"/>
+            <class name="ai.metayb.api.auth_session.auth.VerifyResetTokenApiTest"/>
+            <class name="ai.metayb.api.auth_session.session.CurrentSessionApiTest"/>
+            <class name="ai.metayb.api.auth_session.profile.MyRolesApiTest"/>
+            <class name="ai.metayb.api.auth_session.profile.SwitchableUsersApiTest"/>
+            <class name="ai.metayb.api.auth_session.profile.SwitchProfileApiTest"/>
         </classes>
     </test>
 
