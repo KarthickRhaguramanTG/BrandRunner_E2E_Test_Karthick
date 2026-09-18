@@ -29,6 +29,16 @@ import java.util.Set;
 
 public class BaseDriver implements Browser, Element, Select, TargetLocator {
 
+    static {
+        // Selenium's default "jdk-http-client" factory fails to construct on this
+        // machine (java.net.http.HttpClient's internal Selector/Pipe loopback
+        // wakeup uses a Unix Domain Socket that this machine's network/security
+        // stack rejects - reproduced for both Chrome and Edge, across every local
+        // JDK 17/21/24 build). ai.metayb.selenium.UrlConnectionHttpClient avoids
+        // that entirely via plain java.net.HttpURLConnection. See its Javadoc.
+        System.setProperty("webdriver.http.factory", "urlconnection");
+    }
+
     private static final ThreadLocal<RemoteWebDriver> driverThreadLocal = new ThreadLocal<>();
     protected Logger logger;
 
