@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- BrandRunners Web API suite. Source of truth: "BrandRunners Web APIs" Postman collection.
-     Currently covers ONLY the "00. Auth & Session" folder (Phase 2E) - do not add other
-     folders here until they go through the same analysis/verification process.
+     Covers "00. Auth & Session", "01. Control Settings", "02. ANP", "03. FWM",
+     "05. Master Data", "06. Files, Audit & Misc", and "07. Public, Maintenance &
+     Cron" in full. Do not add other folders here until they go through the same
+     analysis/verification process.
      Run independently of testng-ui.xml/testng-mobile.xml, e.g.:
        mvn clean test -DsuiteXmlFile=src/test/resources/testng/testng-api.xml -->
 <suite name="BrandRunners API Suite">
@@ -19,6 +21,180 @@
             <class name="ai.metayb.api.auth_session.profile.MyRolesApiTest"/>
             <class name="ai.metayb.api.auth_session.profile.SwitchableUsersApiTest"/>
             <class name="ai.metayb.api.auth_session.profile.SwitchProfileApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - App Settings + Tenant &amp; BU Settings">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.appsettings.GetAppSettingsApiTest"/>
+            <class name="ai.metayb.api.controlsettings.appsettings.StageAllowedApiTest"/>
+            <class name="ai.metayb.api.controlsettings.appsettings.SaveAppSettingsApiTest"/>
+            <class name="ai.metayb.api.controlsettings.tenantbusettings.TenantSettingsApiTest"/>
+            <class name="ai.metayb.api.controlsettings.tenantbusettings.BusinessUnitSettingsApiTest"/>
+            <class name="ai.metayb.api.controlsettings.tenantbusettings.AiIntegrationStatusApiTest"/>
+            <class name="ai.metayb.api.controlsettings.tenantbusettings.GoogleMapKeyApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - Users">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.users.UserListApiTest"/>
+            <class name="ai.metayb.api.controlsettings.users.UserLookupApiTest"/>
+            <class name="ai.metayb.api.controlsettings.users.UserBulkReadApiTest"/>
+            <class name="ai.metayb.api.controlsettings.users.UserWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - Designations">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.designations.DesignationListApiTest"/>
+            <class name="ai.metayb.api.controlsettings.designations.DesignationWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - Business Units">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.businessunits.BusinessUnitApiTest"/>
+            <class name="ai.metayb.api.controlsettings.businessunits.BusinessUnitWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - Locations">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.locations.LocationListApiTest"/>
+            <class name="ai.metayb.api.controlsettings.locations.LocationHierarchyApiTest"/>
+            <class name="ai.metayb.api.controlsettings.locations.LocationLookupApiTest"/>
+            <class name="ai.metayb.api.controlsettings.locations.LocationGridFilterApiTest"/>
+            <class name="ai.metayb.api.controlsettings.locations.LocationWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="01. Control Settings - Bank Details &amp; Branding">
+        <classes>
+            <class name="ai.metayb.api.controlsettings.bankdetails.BankDetailsApiTest"/>
+            <class name="ai.metayb.api.controlsettings.branding.BrandingApiTest"/>
+        </classes>
+    </test>
+
+    <test name="02. ANP - Filters">
+        <classes>
+            <class name="ai.metayb.api.anp.filters.FilterMetaApiTest"/>
+            <class name="ai.metayb.api.anp.filters.FilterCascadeApiTest"/>
+        </classes>
+    </test>
+
+    <test name="02. ANP - Dashboards">
+        <classes>
+            <class name="ai.metayb.api.anp.dashboard.HomeDashboardApiTest"/>
+            <class name="ai.metayb.api.anp.dashboard.RequesterDashboardWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.dashboard.ApproverDashboardWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.dashboard.ExecutiveDashboardWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.dashboard.LegacyDashboardWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="02. ANP - Activities">
+        <classes>
+            <class name="ai.metayb.api.anp.activities.ActivityReadApiTest"/>
+            <class name="ai.metayb.api.anp.activities.ActivityWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="02. ANP - Budget">
+        <classes>
+            <class name="ai.metayb.api.anp.budget.BudgetReadApiTest"/>
+            <class name="ai.metayb.api.anp.budget.BudgetEditStateApiTest"/>
+            <class name="ai.metayb.api.anp.budget.BudgetWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.budgetworkflow.BudgetWorkflowReadApiTest"/>
+            <class name="ai.metayb.api.anp.budgetworkflow.BudgetWorkflowWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.budgetapproval.BudgetApprovalApiTest"/>
+            <class name="ai.metayb.api.anp.budgetactuals.BudgetActualsApiTest"/>
+            <class name="ai.metayb.api.anp.budgetactuals.BudgetActualsWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="02. ANP - Assets, Inventory &amp; Vendors">
+        <classes>
+            <class name="ai.metayb.api.anp.assets.AssetReadApiTest"/>
+            <class name="ai.metayb.api.anp.assets.AssetWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.anp.inventory.InventoryApiTest"/>
+            <class name="ai.metayb.api.anp.vendors.VendorReadApiTest"/>
+            <class name="ai.metayb.api.anp.vendors.VendorWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="03. FWM - Dashboard, Field Activity &amp; Pre-Activity Access">
+        <classes>
+            <class name="ai.metayb.api.fwm.dashboard.FwmDashboardApiTest"/>
+            <class name="ai.metayb.api.fwm.fieldactivity.FieldActivityCoreApiTest"/>
+            <class name="ai.metayb.api.fwm.fieldactivity.FieldActivitySalesApiTest"/>
+            <class name="ai.metayb.api.fwm.fieldactivity.FieldActivityLookupApiTest"/>
+            <class name="ai.metayb.api.fwm.fieldactivity.FieldActivityWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.fwm.preactivityaccess.PreActivityAccessApiTest"/>
+            <class name="ai.metayb.api.fwm.preactivityaccess.PreActivityAccessWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="03. FWM - Workflow, Form Config &amp; Entity Management">
+        <classes>
+            <class name="ai.metayb.api.fwm.workflowmanagement.WorkflowManagementApiTest"/>
+            <class name="ai.metayb.api.fwm.workflowmanagement.WorkflowManagementWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.fwm.formconfiguration.FormConfigurationApiTest"/>
+            <class name="ai.metayb.api.fwm.entitymanagement.EntityManagementApiTest"/>
+            <class name="ai.metayb.api.fwm.entitymanagement.EntityManagementWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="03. FWM - Location Master, Feed, Gallery &amp; Targets">
+        <classes>
+            <class name="ai.metayb.api.fwm.locationmaster.LocationMasterApiTest"/>
+            <class name="ai.metayb.api.fwm.locationmaster.LocationMasterWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.fwm.feedmanagement.FeedManagementApiTest"/>
+            <class name="ai.metayb.api.fwm.gallery.GalleryApiTest"/>
+            <class name="ai.metayb.api.fwm.targetmanagement.TargetManagementApiTest"/>
+            <class name="ai.metayb.api.fwm.targetmanagement.TargetManagementWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.fwm.assignedtargets.AssignedTargetsApiTest"/>
+            <class name="ai.metayb.api.fwm.continuousstandardactivities.ContinuousStandardActivitiesApiTest"/>
+            <class name="ai.metayb.api.fwm.continuousstandardactivities.ContinuousStandardActivitiesWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="03. FWM - Reports">
+        <classes>
+            <class name="ai.metayb.api.fwm.reports.ReportsAttendanceApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsBankDetailsApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsStandardActivityApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsTargetApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsUserActivityApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsLocationTrackingApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsPerformanceApiTest"/>
+            <class name="ai.metayb.api.fwm.reports.ReportsSalesApiTest"/>
+        </classes>
+    </test>
+
+    <test name="05. Master Data">
+        <classes>
+            <class name="ai.metayb.api.masterdata.products.ProductsApiTest"/>
+            <class name="ai.metayb.api.masterdata.products.ProductsWriteOperationsApiTest"/>
+            <class name="ai.metayb.api.masterdata.uoms.UomsApiTest"/>
+            <class name="ai.metayb.api.masterdata.vehicles.VehiclesApiTest"/>
+            <class name="ai.metayb.api.masterdata.vehicles.VehiclesWriteOperationsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="06. Files, Audit &amp; Misc">
+        <classes>
+            <class name="ai.metayb.api.filesauditmisc.files.FilesApiTest"/>
+            <class name="ai.metayb.api.filesauditmisc.auditlogs.AuditLogsApiTest"/>
+        </classes>
+    </test>
+
+    <test name="07. Public, Maintenance &amp; Cron">
+        <classes>
+            <class name="ai.metayb.api.publicmaintenancecron.publicsales.PublicSalesApiTest"/>
+            <class name="ai.metayb.api.publicmaintenancecron.publicworkflow.VerifyEmailLinkApiTest"/>
+            <class name="ai.metayb.api.publicmaintenancecron.maintenance.DbTenantMigrateApiTest"/>
+            <class name="ai.metayb.api.publicmaintenancecron.cron.CronApiTest"/>
         </classes>
     </test>
 

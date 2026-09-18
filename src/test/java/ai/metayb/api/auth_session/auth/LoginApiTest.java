@@ -65,27 +65,36 @@ public class LoginApiTest extends BaseApiTest {
         Allure.step("data.user.businessInfo[0].id: " + businessUnitId);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a wrong password is rejected")
+    @Test(groups = {"api", "regression", "negative"}, description = "Login with a valid tenant, a valid user, and an invalid password is rejected")
     @Story("User Login")
-    @Description("Verified live: wrong password returns HTTP 400 with message 'Login Failed' " +
-            "(not 401 - this API uses 400 uniformly for auth failures).")
-    public void loginWithWrongPasswordIsRejected() throws Exception {
+    @Description("Valid tenant (ConfigManager.getApiTenant(), the collection's default 'maggie.qas') + valid " +
+            "QA user (credentials.apiEmail) + intentionally wrong password. Verified live: HTTP 400 with " +
+            "message 'Login Failed' (not 401 - this API uses 400 uniformly for auth failures), and no " +
+            "accessToken cookie is issued. performLogin() makes a fresh HTTP call with these exact credentials " +
+            "on every invocation - it never reads BaseApiTest's shared/static authToken or requestSpecification, " +
+            "so this cannot accidentally pass via another test's cached session.")
+    public void loginWithValidTenantValidUserAndInvalidPassword() throws Exception {
         DataReader credentials = new DataReader();
         Response response = performLogin(credentials.apiEmail, "WrongPassword@999");
 
         Assert.assertEquals(response.statusCode(), 400, "Wrong password should return HTTP 400");
         Assert.assertEquals(response.jsonPath().getString("message"), "Login Failed");
+        Assert.assertNull(response.getCookie("accessToken"), "No accessToken cookie should be issued on a failed login");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a non-existent email is rejected")
+    @Test(groups = {"api", "regression", "negative"}, description = "Login with a valid tenant and an invalid/non-existent user is rejected")
     @Story("User Login")
-    @Description("Verified live: an unregistered email returns the SAME HTTP 400 'Login Failed' " +
-            "message as a wrong password - this API does not reveal whether an email is registered.")
-    public void loginWithNonExistentEmailIsRejected() throws Exception {
+    @Description("Valid tenant (ConfigManager.getApiTenant()) + a non-existent email + an otherwise well-formed " +
+            "password (so a password-format validation error can't be mistaken for this scenario). Verified " +
+            "live: HTTP 400 with the SAME 'Login Failed' message as a wrong password - this API does not " +
+            "reveal whether an email is registered - and no accessToken cookie is issued. Constructs its own " +
+            "request independent of any shared suite-level session, same as the invalid-password case above.")
+    public void loginWithValidTenantAndInvalidUser() throws Exception {
         Response response = performLogin("nonexistent-user-xyz@metayb.ai", "Whatever@123");
 
         Assert.assertEquals(response.statusCode(), 400, "Non-existent email should return HTTP 400");
         Assert.assertEquals(response.jsonPath().getString("message"), "Login Failed");
+        Assert.assertNull(response.getCookie("accessToken"), "No accessToken cookie should be issued on a failed login");
     }
 
     @Test(groups = {"api", "regression", "negative"}, description = "Login with a missing password field is rejected with a validation error")

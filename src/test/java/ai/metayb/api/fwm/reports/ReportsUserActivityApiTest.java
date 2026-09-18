@@ -1,0 +1,76 @@
+package ai.metayb.api.fwm.reports;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import testUtils.BaseApiTest;
+
+import static io.restassured.RestAssured.given;
+
+/**
+ * "03. FWM / Reports - User Activity" - all 4 Postman requests, all GET.
+ */
+@Epic("BrandRunners Web API")
+@Feature("FWM - Reports - User Activity")
+public class ReportsUserActivityApiTest extends BaseApiTest {
+
+    private static final String TODAY = java.time.LocalDate.now().toString();
+
+    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filters returns the user activity report's filter options")
+    @Story("Get Filters")
+    @Description("Verified live: HTTP 200, data.designations is a non-empty array.")
+    public void getFiltersReturnsOptions() {
+        Response response = given().spec(requestSpecification)
+                .get("/web/user-activity-report/filters?startDate=2026-09-01&endDate=" + TODAY);
+
+        Assert.assertEquals(response.statusCode(), 200);
+        Assert.assertFalse(response.jsonPath().getList("data.designations").isEmpty(), "data.designations should be non-empty");
+    }
+
+    @Test(groups = {"api", "smoke", "positive"}, description = "Get Report Details returns user activity report records")
+    @Story("Get Report Details")
+    @Description("Verified live: HTTP 200 (startDate=2026-09-01, endDate=today, page=1, limit=20), data.records is a non-empty array.")
+    public void getReportDetailsReturnsRecords() {
+        Response response = given().spec(requestSpecification)
+                .get("/web/user-activity-report/report-details?startDate=2026-09-01&endDate=" + TODAY + "&page=1&limit=20");
+
+        Assert.assertEquals(response.statusCode(), 200);
+        Assert.assertFalse(response.jsonPath().getList("data.records").isEmpty(), "data.records should be non-empty");
+    }
+
+    @Test(groups = {"api", "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
+    @Story("Get User Listing")
+    @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - Postman's saved request has no userId param, documented per Step 8.")
+    public void getUserListingAsDefinedInPostmanReturnsValidationError() {
+        Response response = given().spec(requestSpecification)
+                .get("/web/user-activity-report/user-listing?startDate=2026-09-01&endDate=" + TODAY);
+
+        Assert.assertEquals(response.statusCode(), 500);
+        Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
+    }
+
+    @Test(groups = {"api", "regression"}, description = "Get Detail, called exactly as the Postman collection defines it, returns a validation error")
+    @Story("Get Detail")
+    @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - same gap as Get User Listing.")
+    public void getDetailAsDefinedInPostmanReturnsValidationError() {
+        Response response = given().spec(requestSpecification).get("/web/user-activity-report/detail");
+
+        Assert.assertEquals(response.statusCode(), 500);
+        Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
+    }
+
+    @Test(groups = {"api", "regression", "negative"}, description = "Get Filters without authentication fails")
+    @Story("Get Filters")
+    @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
+    public void getFiltersWithoutAuthFails() {
+        Response response = given().spec(noAuthRequestSpecification)
+                .get("/web/user-activity-report/filters?startDate=2026-09-01&endDate=" + TODAY);
+
+        Assert.assertEquals(response.statusCode(), 401);
+        Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
+    }
+}
