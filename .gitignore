@@ -9,6 +9,9 @@ allure-report/
 # Allure results (optional, depends on your preference)
 target/allure-results/
 
+# Allure CLI binary distribution, auto-downloaded by the allure-maven plugin
+.allure/
+
 # Logs
 logs/
 *.log
