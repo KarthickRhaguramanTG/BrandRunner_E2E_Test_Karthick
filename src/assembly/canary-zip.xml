@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Builds the CloudWatch Synthetics-compatible ZIP for ApiHealthCanary:
+
+      canary.zip
+      ├── lib/
+      │   ├── end-to-end-testing-1.0-SNAPSHOT-canary.jar   (this project's own main classes)
+      │   └── <runtime dependency jars actually needed>
+      └── synthetics.json
+
+  This is a SEPARATE artifact from the project's normal test jar, built only
+  when the "canary" Maven profile is active (mvn package -Pcanary) - default
+  `mvn clean test` / `mvn clean package` never invoke this and are completely
+  unaffected.
+
+  Why an explicit include/exclude list instead of "just bundle everything":
+  every dependency in this pom.xml (Selenium, Appium, Selenide, WebDriverManager,
+  POI, Cucumber, Allure, ExtentReports) is declared at default "compile" scope,
+  because the project's UI/mobile/API tests all share one pom.xml by design.
+  None of those libraries are referenced by anything ApiHealthCanary/
+  CanaryApiSessionClient/CanaryConfig actually use, so they're excluded by name
+  here - Maven's dependency:*-scope filtering can't distinguish "used by the
+  canary" from "used by Selenium tests" on its own, since they're all one scope.
+  TestNG (test scope) and the Synthetics SDK itself (provided scope, supplied
+  by the Lambda runtime layer) are already excluded automatically by using
+  <scope>runtime</scope> below - no explicit exclude needed for either.
+-->
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>canary</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <files>
+        <file>
+            <!-- The filtered "canary" classifier jar built by maven-jar-plugin's
+                 canary-jar execution (see pom.xml's canary profile) - NOT the plain
+                 project jar, which bundles config/credentials.properties and other
+                 UI/mobile-only resources this artifact must not ship. -->
+            <source>${project.build.directory}/${project.build.finalName}-canary.jar</source>
+            <outputDirectory>lib</outputDirectory>
+            <destName>${project.artifactId}-${project.version}-canary.jar</destName>
+        </file>
+        <file>
+            <source>src/main/resources/synthetics.json</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <scope>runtime</scope>
+            <excludes>
+                <!-- UI/mobile-only frameworks explicitly called out as not-to-package,
+                     plus Cucumber (BDD, unused here) - not referenced by any class the
+                     Canary uses. Excluding these top-level artifacts does NOT remove
+                     their transitive dependencies automatically (Maven Assembly Plugin
+                     filters the already-resolved flat artifact list, not the graph), so
+                     each transitive that ONLY these frameworks pull in is separately
+                     excluded below. Every exclude in this file was verified against a
+                     real `mvn dependency:tree` run to confirm it has no other consumer -
+                     see the comments next to each group for which framework owns it.
+                     Notably KEPT despite looking similar: byte-buddy (needed directly by
+                     jackson-databind), groovy/httpclient(4.x)/hamcrest/tagsoup/commons-logging
+                     (needed by rest-assured), commons-lang3/commons-codec (needed by
+                     rest-assured too, just at a different version once the higher one from
+                     webdrivermanager/POI is gone), netty-*/reactive-streams (needed by the
+                     AWS SDK's netty-nio-client). -->
+                <exclude>org.seleniumhq.selenium:*</exclude>
+                <exclude>io.appium:*</exclude>
+                <exclude>io.github.bonigarcia:*</exclude>
+                <exclude>com.codeborne:*</exclude>
+                <exclude>org.apache.poi:*</exclude>
+                <exclude>io.cucumber:*</exclude>
+                <exclude>io.qameta.allure:*</exclude>
+                <exclude>com.aventstack:*</exclude>
+                <exclude>org.testng:*</exclude>
+                <exclude>org.slf4j:slf4j-simple</exclude>
+
+                <!-- Exclusively selenium-java / appium / webdrivermanager transitives -->
+                <exclude>com.google.code.gson:gson</exclude>
+                <exclude>org.jspecify:jspecify</exclude>
+                <exclude>com.google.guava:guava</exclude>
+                <exclude>com.google.guava:failureaccess</exclude>
+                <exclude>com.google.guava:listenablefuture</exclude>
+                <exclude>com.google.errorprone:error_prone_annotations</exclude>
+                <exclude>com.google.j2objc:j2objc-annotations</exclude>
+                <exclude>com.google.auto.service:auto-service-annotations</exclude>
+                <exclude>io.opentelemetry:*</exclude>
+                <exclude>com.github.docker-java:*</exclude>
+                <exclude>org.brotli:dec</exclude>
+                <exclude>net.java.dev.jna:jna</exclude>
+                <exclude>org.slf4j:jcl-over-slf4j</exclude>
+                <exclude>org.apache.commons:commons-compress</exclude>
+
+                <!-- Exclusively Apache POI transitives -->
+                <exclude>org.apache.commons:commons-math3</exclude>
+                <exclude>com.zaxxer:SparseBitSet</exclude>
+                <exclude>commons-io:commons-io</exclude>
+                <exclude>org.apache.commons:commons-collections4</exclude>
+                <exclude>org.apache.xmlbeans:xmlbeans</exclude>
+                <exclude>com.github.virtuald:curvesapi</exclude>
+
+                <!-- Compile-time-only annotation processor - generates bytecode at compile
+                     time, never needed on any runtime classpath regardless of which
+                     dependency happens to pull it in transitively -->
+                <exclude>org.projectlombok:lombok</exclude>
+
+                <!-- Exclusively ExtentReports / Selenide transitives -->
+                <exclude>io.reactivex.rxjava3:rxjava</exclude>
+                <exclude>org.freemarker:freemarker</exclude>
+                <exclude>com.github.valfirst.browserup-proxy:*</exclude>
+                <exclude>org.opentest4j:opentest4j</exclude>
+
+                <!-- Exclusively TestNG / Cucumber transitives -->
+                <exclude>org.apiguardian:apiguardian-api</exclude>
+                <exclude>org.jcommander:jcommander</exclude>
+                <exclude>org.webjars:jquery</exclude>
+            </excludes>
+        </dependencySet>
+    </dependencySets>
+</assembly>

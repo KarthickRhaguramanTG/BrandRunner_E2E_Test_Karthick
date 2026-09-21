@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Console-only Log4j2 config for CloudWatch Synthetics Canary execution.
+
+     The existing log4j2.xml (used by every UI/API/mobile test) also writes to
+     a RollingFile appender at a relative "logs/" path. The Synthetics Java
+     Lambda runtime's working directory isn't writable outside /tmp, and
+     nothing written there is visible in CloudWatch Logs anyway - so reusing
+     log4j2.xml as-is would make every Canary run emit noisy "unable to create
+     file" diagnostics for an appender that can never do anything useful here.
+
+     ApiHealthCanary points Log4j2 at this file instead (via a system property
+     set in its own static initializer, before any Logger is first obtained).
+     The existing log4j2.xml is untouched and continues to apply to every
+     other execution path (TestNG UI/API/mobile suites) exactly as before -
+     this file is only ever selected by the Canary process itself. -->
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <!-- No ANSI highlighting here (CloudWatch Logs doesn't render color codes -
+                 they'd just show up as literal escape sequences in every log line). -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

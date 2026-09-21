@@ -155,6 +155,29 @@
             <version>2.20.0</version>
         </dependency>
 
+        <!-- CloudWatch Synthetics (Canary) -->
+        <!-- https://repo1.maven.org/maven2/software/amazon/synthetics/aws-cloudwatch-synthetics-sdk-java/ -->
+        <!-- Verified directly against Maven Central and the SDK's own source (aws/aws-cloudwatch-synthetics-sdk-java
+             on GitHub) rather than AWS's own "Writing a canary" doc page, which shows a stale
+             com.amazonaws.synthetics.Synthetics import - the real, current package is
+             software.amazon.synthetics. 1.0.0 is the only version published. `provided` scope: this interface
+             is supplied by the Synthetics Lambda execution environment at runtime, and must never be bundled
+             into the canary deployment zip (see src/assembly/canary-zip.xml). -->
+        <dependency>
+            <groupId>software.amazon.synthetics</groupId>
+            <artifactId>aws-cloudwatch-synthetics-sdk-java</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- AWS Secrets Manager (Canary credentials) -->
+        <!-- https://mvnrepository.com/artifact/software.amazon.awssdk/secretsmanager -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>secretsmanager</artifactId>
+            <version>2.55.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -265,6 +288,75 @@
                                 <version>3.1.2</version>
                             </dependency>
                         </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Canary packaging is opt-in only: default `mvn clean package`/`mvn clean test`
+             are untouched. Activate with -Pcanary. ApiHealthCanary and friends are
+             ordinary src/main/java classes already compiled by every build - this
+             profile only adds a SEPARATE, filtered jar (classifier "canary") instead
+             of reusing the normal project jar as-is. That matters: the normal jar
+             packages the *entire* shared src/main/resources (every UI/mobile/API
+             config file), which includes config/credentials.properties - a real
+             plaintext password, committed for local dev use by the TestNG suite.
+             Shipping that file inside the Canary artifact would violate "no
+             credentials in the ZIP" outright, so this filtered jar excludes it (and
+             other UI/mobile-only resources the Canary has no use for) explicitly,
+             rather than relying on the normal jar and hoping nothing sensitive is in
+             it. config/config.properties (base URL/tenant - not secret) is kept, since
+             CanaryConfig's local-dev fallback path reads it via ConfigManager. -->
+        <profile>
+            <id>canary</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>canary-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>canary</classifier>
+                                    <excludes>
+                                        <exclude>config/credentials.properties</exclude>
+                                        <exclude>config/input.properties</exclude>
+                                        <exclude>config/mobile/**</exclude>
+                                        <exclude>test-data/**</exclude>
+                                        <exclude>log4j2.xml</exclude>
+                                        <exclude>synthetics.json</exclude>
+                                        <exclude>META-INF/services/**</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.7.1</version>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/assembly/canary-zip.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>canary</finalName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-canary-zip</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
