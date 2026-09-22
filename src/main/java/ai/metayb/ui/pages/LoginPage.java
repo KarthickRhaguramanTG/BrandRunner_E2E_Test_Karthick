@@ -23,12 +23,16 @@ public class LoginPage extends BaseDriver {
     public void enterUserCredentials() {
         waitForElement(elements.getEmailAddressLocator());
         type(elements.getTxtEmailAddress(), data.emailAddress);
-        type(elements.getTxtPassword(), data.password);
+        typeSecret(elements.getTxtPassword(), data.password);
         click(elements.getBtnLogin());
     }
 
     public void assertLoginSuccess() {
-        String actualText = getText(elements.getHelloUserMessage());
-        validateDisplayText(actualText, "Hello User!", "Login is successful");
+        // The dashboard takes a moment to render after the login click (API call +
+        // client-side redirect) - without this wait, getText() races the app's own
+        // rendering and intermittently finds nothing yet.
+        waitForElement(elements.getDashboardTitleLocator());
+        String actualText = getText(elements.getDashboardTitle());
+        validateDisplayText(actualText, "Dashboard", "Login is successful");
     }
 }

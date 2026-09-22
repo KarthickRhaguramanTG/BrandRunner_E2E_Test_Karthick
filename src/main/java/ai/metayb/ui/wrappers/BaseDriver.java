@@ -291,6 +291,17 @@ public class BaseDriver implements Browser, Element, Select, TargetLocator {
     }
 
     @Override
+    public void typeSecret(WebElement ele, String data) {
+        try {
+            ele.clear();
+            ele.sendKeys(data);
+            reportStep("A masked value is entered", "PASS");
+        } catch (Exception e) {
+            reportStep("A masked value could not be entered: " + e.getMessage(), "FAIL");
+        }
+    }
+
+    @Override
     public void typeWithoutClear(WebElement ele, String data) {
         try {
             ele.sendKeys(data);

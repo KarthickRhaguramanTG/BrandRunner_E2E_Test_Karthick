@@ -14,6 +14,17 @@ public interface Element {
     public void type(WebElement ele, String data) ;
 
     /**
+     * This method will enter the value in the given text field, exactly like {@link #type},
+     * but without logging the value itself to the console/Allure report - use this for
+     * passwords, tokens, or any other field whose value must never appear in a log or report.
+     * @param ele   - The Webelement (text field) in which the data to be entered
+     * @param data  - The sensitive data to be sent to the webelement
+     * @author Samuel Manoj
+     * @throws org.openqa.selenium.ElementNotInteractableException if the element is not interactable (e.g., not visible or disabled)
+     */
+    public void typeSecret(WebElement ele, String data);
+
+    /**
      * This method will enter the value in the given text field without clearing
      * @param ele   - The Webelement (text field) in which the data to be entered
      * @param data  - The data to be sent to the webelement
