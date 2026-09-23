@@ -32,7 +32,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Business Units")
 public class BusinessUnitApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns the business units list envelope")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get All returns the business units list envelope")
     @Story("Get All")
     @Description("Verified live: HTTP 200, data.data/data.meta present. Deliberately does not inspect the " +
             "response's 'env' field - see class Javadoc security finding.")
@@ -45,7 +45,7 @@ public class BusinessUnitApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.meta"), "Response should include data.meta");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Business Unit by ID returns the business unit's details")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Business Unit by ID returns the business unit's details")
     @Story("Get Business Unit by ID")
     @Description("Verified live: HTTP 200 for id=1 (the logged-in user's own business unit), name/uuid present.")
     public void getBusinessUnitByIdReturnsDetails() {
@@ -57,7 +57,7 @@ public class BusinessUnitApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.uuid"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Business Unit by ID without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Business Unit by ID without authentication fails")
     @Story("Get Business Unit by ID")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getBusinessUnitByIdWithoutAuthFails() {

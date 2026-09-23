@@ -39,7 +39,7 @@ public class BaseApiTest {
     protected static RequestSpecification requestSpecification;
     protected static RequestSpecification noAuthRequestSpecification;
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void globalSetup() throws Exception {
         baseURI = ConfigManager.getApiBaseUrl();
         logger.info("Base URI initialized for environment: {} (tenant: {})", baseURI, ConfigManager.getApiTenant());

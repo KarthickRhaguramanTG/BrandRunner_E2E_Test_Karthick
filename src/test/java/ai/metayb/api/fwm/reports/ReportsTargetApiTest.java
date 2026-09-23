@@ -20,7 +20,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
 
     private static final String TODAY = java.time.LocalDate.now().toString();
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filters returns the target report's filter options")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Filters returns the target report's filter options")
     @Story("Get Filters")
     @Description("Verified live: HTTP 200, data.designations is a non-empty array.")
     public void getFiltersReturnsOptions() {
@@ -31,7 +31,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.designations").isEmpty(), "data.designations should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Workflow Listing, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Workflow Listing, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Workflow Listing")
     @Description("Verified live: HTTP 500, message lists 'activityId is required' - Postman's saved request has no params, documented per Step 8.")
     public void getWorkflowListingAsDefinedInPostmanReturnsValidationError() {
@@ -41,7 +41,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("activityId is required"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Targets, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Targets, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Targets")
     @Description("Verified live: HTTP 500, message 'Provide workflowId or workflowIds'.")
     public void getTargetsAsDefinedInPostmanReturnsValidationError() {
@@ -51,7 +51,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("Provide workflowId or workflowIds"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get User Listing")
     @Description("Verified live: HTTP 500, message lists 'fromDate' as missing/invalid - Postman's saved request has no params, documented per Step 8.")
     public void getUserListingAsDefinedInPostmanReturnsValidationError() {
@@ -61,7 +61,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("fromDate"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 500, message lists 'fromDate' as missing/invalid - same gap as Get User Listing.")
     public void getReportDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -72,7 +72,7 @@ public class ReportsTargetApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("fromDate"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Filters without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Filters without authentication fails")
     @Story("Get Filters")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getFiltersWithoutAuthFails() {

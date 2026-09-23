@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="BrandRunner API - Sanity">
+
+    <test name="Sanity Tests">
+
+        <groups>
+            <run>
+                <include name="sanity"/>
+            </run>
+        </groups>
+
+        <packages>
+           <package name="ai.metayb.api.*"/>
+        </packages>
+
+    </test>
+
+</suite>

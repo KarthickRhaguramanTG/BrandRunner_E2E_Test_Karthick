@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Master Data - UOMs")
 public class UomsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List UOMs returns existing units of measure")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List UOMs returns existing units of measure")
     @Story("List UOMs")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, businessUnitId, name, code, isActive}.")
     public void listUomsReturnsUnits() {
@@ -29,7 +29,7 @@ public class UomsApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List UOMs without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List UOMs without authentication fails")
     @Story("List UOMs")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listUomsWithoutAuthFails() {
@@ -39,7 +39,7 @@ public class UomsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/uoms returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: PUT /web/uoms returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update UOM")
     @Description("Blocked by the same systemic CloudFront/S3 SPA-fallback root cause confirmed throughout every folder automated so far. Directly verified live. Not executed.")
     public void updateUomNotAutomatedDueToEnvironmentIssue() {

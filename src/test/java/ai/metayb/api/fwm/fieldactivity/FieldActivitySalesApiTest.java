@@ -21,7 +21,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Field Activity")
 public class FieldActivitySalesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Sales Summary by ID returns sales performance for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Sales Summary by ID returns sales performance for a real activity")
     @Story("Get Sales Summary by ID")
     @Description("Verified live: HTTP 200 for id=16, data.budgetId matches, data.salesPerformance present.")
     public void getSalesSummaryByIdReturnsPerformance() {
@@ -32,7 +32,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.salesPerformance"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Distributor Sales Summary by ID returns distributor sales data for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Distributor Sales Summary by ID returns distributor sales data for a real activity")
     @Story("Get Distributor Sales Summary by ID")
     @Description("Verified live: HTTP 200 for id=16, data.budgetId matches.")
     public void getDistributorSalesSummaryByIdReturnsData() {
@@ -42,7 +42,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 16);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get User Sales Performance by ID returns user-wise sales performance for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get User Sales Performance by ID returns user-wise sales performance for a real activity")
     @Story("Get User Sales Performance by ID")
     @Description("Verified live: HTTP 200 for id=16, 'User-wise sales performance...', data.budgetId matches.")
     public void getUserSalesPerformanceByIdReturnsData() {
@@ -52,7 +52,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 16);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Date Wise Sku Sales Summary by ID returns date-wise SKU sales for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Date Wise Sku Sales Summary by ID returns date-wise SKU sales for a real activity")
     @Story("Get Date Wise Sku Sales Summary by ID")
     @Description("Verified live: HTTP 200 for id=16, data.budgetId matches.")
     public void getDateWiseSkuSalesSummaryByIdReturnsData() {
@@ -62,7 +62,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 16);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Reconciliation Details by ID returns reconciliation rows for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Reconciliation Details by ID returns reconciliation rows for a real activity")
     @Story("Get Reconciliation Details by ID")
     @Description("Verified live: HTTP 200 for id=16, 'Reconciliation details fetched successfully', data.rows present.")
     public void getReconciliationDetailsByIdReturnsRows() {
@@ -72,7 +72,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.rows"), "data.rows should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Team Daily Sales Performance by ID returns team-wise daily performance for a real activity")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Team Daily Sales Performance by ID returns team-wise daily performance for a real activity")
     @Story("Get Team Daily Sales Performance by ID")
     @Description("Verified live: HTTP 200 for id=16, data.budgetId matches.")
     public void getTeamDailySalesPerformanceByIdReturnsData() {
@@ -82,7 +82,7 @@ public class FieldActivitySalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 16);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Sales Summary by ID without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Sales Summary by ID without authentication fails")
     @Story("Get Sales Summary by ID")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getSalesSummaryByIdWithoutAuthFails() {

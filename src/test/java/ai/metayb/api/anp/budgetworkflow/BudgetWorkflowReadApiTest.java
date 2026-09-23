@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Budget Workflow")
 public class BudgetWorkflowReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Approval Targets by Budget ID returns the approval eligibility for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Approval Targets by Budget ID returns the approval eligibility for a real budget")
     @Story("Get Workflow Approval Targets by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetId matches, data.eligible/data.reason present.")
     public void getWorkflowApprovalTargetsReturnsEligibility() {
@@ -35,7 +35,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.eligible"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow by Budget ID returns the workflow history for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow by Budget ID returns the workflow history for a real budget")
     @Story("Get Workflow by Budget ID")
     @Description("Verified live: HTTP 200 (page=1, limit=20) for budgetId=18, data is a non-empty array with a real workflowId (33).")
     public void getWorkflowByBudgetIdReturnsHistory() {
@@ -45,7 +45,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Preview Budget Approval returns the approval preview for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Preview Budget Approval returns the approval preview for a real budget")
     @Story("Preview Budget Approval")
     @Description("Verified live: HTTP 200 for budgetId=18, data.header.budgetId matches.")
     public void previewBudgetApprovalReturnsHeader() {
@@ -55,7 +55,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.header.budgetId"), 18);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Comments by Budget ID returns comments for a real workflow")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Comments by Budget ID returns comments for a real workflow")
     @Story("Get Workflow Comments by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18/workflowId=33, data is an array (empty - no comments yet, asserted as observed).")
     public void getWorkflowCommentsByBudgetIdReturnsArray() {
@@ -65,7 +65,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list (may be empty)");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Comment by Budget ID returns comments for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Comment by Budget ID returns comments for a real budget")
     @Story("Get Workflow Comment by Budget ID")
     @Description("Verified live: this GET actually returns HTTP 201 (not 200) with data as an empty array - " +
             "an unusual status code for a read endpoint, but the real, observed behavior in this environment. " +
@@ -77,7 +77,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list (may be empty)");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval Screen by Budget ID returns the approval screen data for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approval Screen by Budget ID returns the approval screen data for a real budget")
     @Story("Get Approval Screen by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budget.budgetId matches.")
     public void getApprovalScreenByBudgetIdReturnsData() {
@@ -87,7 +87,7 @@ public class BudgetWorkflowReadApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budget.budgetId"), 18);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Workflow by Budget ID without authentication fails")
+    @Test(groups = {"regression", "negative"}, description = "Get Workflow by Budget ID without authentication fails")
     @Story("Get Workflow by Budget ID")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getWorkflowByBudgetIdWithoutAuthFails() {

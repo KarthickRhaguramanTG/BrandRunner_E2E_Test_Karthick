@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Public, Maintenance & Cron - Public Workflow")
 public class VerifyEmailLinkApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression"}, description = "Verify Email Link, called exactly as Postman defines it (empty body), returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Verify Email Link, called exactly as Postman defines it (empty body), returns a validation error")
     @Story("Verify Email Link")
     @Description("Verified live: HTTP 400, message 'Verification token is required', with no Authorization header at all - confirms this endpoint is genuinely public.")
     public void verifyEmailLinkWithEmptyBodyReturnsValidationError() {
@@ -40,7 +40,7 @@ public class VerifyEmailLinkApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Verification token is required");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Verify Email Link with an unknown/invalid token fails")
+    @Test(groups = { "regression", "negative"}, description = "Verify Email Link with an unknown/invalid token fails")
     @Story("Verify Email Link")
     @Description("Verified live: HTTP 400, message 'Invalid or expired verification link' - distinct from the missing-token message, proving the token IS actually validated server-side rather than merely checked for presence.")
     public void verifyEmailLinkWithInvalidTokenFails() {

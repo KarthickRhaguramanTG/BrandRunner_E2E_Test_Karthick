@@ -26,14 +26,14 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Bank Details")
 public class BankDetailsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/bankdetails/set-active-bank-account returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Set Active Bank Account")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void setActiveBankAccountNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/bankdetails/reveal-bank-account returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Reveal Bank Account")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

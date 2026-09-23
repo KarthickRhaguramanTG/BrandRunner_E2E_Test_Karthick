@@ -30,42 +30,42 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Requester Dashboard")
 public class RequesterDashboardWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/summary (6 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Requester Summary")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void requesterSummaryNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/approval-pipeline (9 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Requester Approval Pipeline")
     @Description("Blocked by environment - same route family as Requester Summary. See class Javadoc. Not executed.")
     public void requesterApprovalPipelineNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/requests-requiring-attention (9 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Requests Requiring Attention")
     @Description("Blocked by environment - same route family as Requester Summary. See class Javadoc. Not executed.")
     public void requestsRequiringAttentionNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/activity-financial-breakdown (3 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Activity Financial Breakdown")
     @Description("Blocked by environment - same route family as Requester Summary. See class Javadoc. Not executed.")
     public void activityFinancialBreakdownNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/budget-trend (6 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Budget Trend")
     @Description("Blocked by environment - same route family as Requester Summary. See class Javadoc. Not executed.")
     public void budgetTrendNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/requester/pending-actual-submission (3 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Pending Actual Submission")
     @Description("Blocked by environment - same route family as Requester Summary. See class Javadoc. Not executed.")

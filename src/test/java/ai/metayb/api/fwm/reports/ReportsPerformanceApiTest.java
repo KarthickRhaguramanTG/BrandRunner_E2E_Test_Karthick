@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Reports - Performance")
 public class ReportsPerformanceApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid.")
     public void getReportDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -33,7 +33,7 @@ public class ReportsPerformanceApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Details, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get User Details, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get User Details")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - same gap as Get Report Details.")
     public void getUserDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -43,7 +43,7 @@ public class ReportsPerformanceApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Attendance Metrics, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get User Attendance Metrics, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get User Attendance Metrics")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - same gap as Get Report Details.")
     public void getUserAttendanceMetricsAsDefinedInPostmanReturnsValidationError() {
@@ -53,7 +53,7 @@ public class ReportsPerformanceApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Total Activities, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Total Activities, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Total Activities")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - same gap as Get Report Details.")
     public void getTotalActivitiesAsDefinedInPostmanReturnsValidationError() {
@@ -63,7 +63,7 @@ public class ReportsPerformanceApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Report Details without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Report Details without authentication fails")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 401, message 'Authentication token missing' - the auth check happens before the validation above.")
     public void getReportDetailsWithoutAuthFails() {

@@ -19,37 +19,37 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Location Master")
 public class LocationMasterWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/location-master/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/location-master/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/location-master/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/location-master/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Location Master")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateLocationMasterNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/location-master/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: DELETE /web/location-master/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Location Master")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteLocationMasterNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/location-master/:id/items returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/location-master/:id/items returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void itemsByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/location-master/:id/items/:itemId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/location-master/:id/items/:itemId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateItemsByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/location-master/:id/items/:itemId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: DELETE /web/location-master/:id/items/:itemId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteItemsByIdNotAutomatedDueToEnvironmentIssue() {

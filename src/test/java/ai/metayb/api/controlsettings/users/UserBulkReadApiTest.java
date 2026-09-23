@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Users")
 public class UserBulkReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Download User Bulk Template returns an xlsx file")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Download User Bulk Template returns an xlsx file")
     @Story("Download User Bulk Template")
     @Description("Verified live: HTTP 200, Content-Type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, non-empty body.")
     public void downloadUserBulkTemplateReturnsXlsx() {
@@ -34,7 +34,7 @@ public class UserBulkReadApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Template file should not be empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Bulk Jobs returns the status of an existing bulk job")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Bulk Jobs returns the status of an existing bulk job")
     @Story("Get Bulk Jobs")
     @Description("Verified live: HTTP 200 for jobId=1 (real pre-existing QA data), status/fileName/totalRows present.")
     public void getBulkJobsReturnsJobStatus() {
@@ -45,7 +45,7 @@ public class UserBulkReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.status"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Bulk Jobs Result returns the result file for a completed job")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Bulk Jobs Result returns the result file for a completed job")
     @Story("Get Bulk Jobs Result")
     @Description("Verified live: HTTP 200, Content-Type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, for jobId=1.")
     public void getBulkJobsResultReturnsResultFile() {
@@ -55,7 +55,7 @@ public class UserBulkReadApiTest extends BaseApiTest {
         Assert.assertTrue(response.contentType().contains("spreadsheetml"), "Expected an xlsx content type, got: " + response.contentType());
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Download User Bulk Template without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Download User Bulk Template without authentication fails")
     @Story("Download User Bulk Template")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void downloadUserBulkTemplateWithoutAuthFails() {

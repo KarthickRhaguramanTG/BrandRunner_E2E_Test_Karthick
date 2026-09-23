@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Locations")
 public class LocationListApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression"}, description = "List Locations, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "List Locations, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("List Locations")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected string, received undefined, ...'. " +
             "The Postman collection's saved request has no query string, so this is what literally replaying " +
@@ -31,7 +31,7 @@ public class LocationListApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("expected string, received undefined"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns the location grid columns and data")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get All returns the location grid columns and data")
     @Story("Get All")
     @Description("Verified live: HTTP 200, data.data.columns present (COUNTRY/STATE/... grid columns).")
     public void getAllReturnsLocationGrid() {
@@ -42,7 +42,7 @@ public class LocationListApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.data.columns"), "Response should include data.data.columns");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All Location returns the hierarchy definitions")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get All Location returns the hierarchy definitions")
     @Story("Get All Location")
     @Description("Verified live: HTTP 200, data.hierarchies is a non-empty array.")
     public void getAllLocationReturnsHierarchies() {
@@ -52,7 +52,7 @@ public class LocationListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.hierarchies").isEmpty(), "data.hierarchies should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Download Sample returns an xlsx file")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Download Sample returns an xlsx file")
     @Story("Download Sample")
     @Description("Verified live: HTTP 200, Content-Type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, non-empty body.")
     public void downloadSampleReturnsXlsx() {
@@ -63,7 +63,7 @@ public class LocationListApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Sample file should not be empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Templates returns available location templates")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Templates returns available location templates")
     @Story("Get Templates")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, templateName, templateConfig}.")
     public void getTemplatesReturnsTemplateList() {
@@ -73,7 +73,7 @@ public class LocationListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get All Location without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get All Location without authentication fails")
     @Story("Get All Location")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAllLocationWithoutAuthFails() {

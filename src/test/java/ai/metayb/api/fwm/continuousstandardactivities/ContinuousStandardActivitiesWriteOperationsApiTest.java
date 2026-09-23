@@ -23,31 +23,31 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Continuous Standard Activities")
 public class ContinuousStandardActivitiesWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/continuous-standard-activities/:id/assign-users returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/continuous-standard-activities/:id/assign-users returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Assign Users by ID")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void assignUsersByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PATCH /web/continuous-standard-activities/:id/assignment-groups/:configGroupId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PATCH /web/continuous-standard-activities/:id/assignment-groups/:configGroupId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Assignment Groups by ID / Config Group ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateAssignmentGroupsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/continuous-standard-activities/:id/assignment-groups/:configGroupId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: DELETE /web/continuous-standard-activities/:id/assignment-groups/:configGroupId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Assignment Groups by ID / Config Group ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteAssignmentGroupsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PATCH /web/continuous-standard-activities/:id/assignments/:assignmentId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: PATCH /web/continuous-standard-activities/:id/assignments/:assignmentId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Assignments by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateAssignmentsByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/continuous-standard-activities/:id/assignments/:assignmentId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: DELETE /web/continuous-standard-activities/:id/assignments/:assignmentId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Assignments by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteAssignmentsByIdNotAutomatedDueToEnvironmentIssue() {

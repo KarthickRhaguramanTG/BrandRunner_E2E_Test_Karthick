@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Designations")
 public class DesignationListApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Permissions List returns the available permission catalog")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Permissions List returns the available permission catalog")
     @Story("Get Permissions List")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, code, name, service_code}.")
     public void getPermissionsListReturnsPermissions() {
@@ -31,7 +31,7 @@ public class DesignationListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Designation List All returns every designation")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Designation List All returns every designation")
     @Story("Get Designation List All")
     @Description("Verified live: HTTP 200, data.data is a non-empty array, data.budgetCreatorIds present.")
     public void getDesignationListAllReturnsDesignations() {
@@ -42,7 +42,7 @@ public class DesignationListApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.budgetCreatorIds"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Designation List returns a paginated designation list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Designation List returns a paginated designation list")
     @Story("Get Designation List")
     @Description("Verified live: HTTP 200, data.data is a non-empty array (page=1, limit=20).")
     public void getDesignationListReturnsPaginatedDesignations() {
@@ -52,7 +52,7 @@ public class DesignationListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Location Hierarchy List returns the hierarchy levels")
+    @Test(groups = {"sanity", "sanity", "positive"}, description = "Get Location Hierarchy List returns the hierarchy levels")
     @Story("Get Location Hierarchy List")
     @Description("Verified live: HTTP 200, 'Location hierarchies fetched successfully', data is a non-empty array of {id, code, level}.")
     public void getLocationHierarchyListReturnsLevels() {
@@ -63,7 +63,7 @@ public class DesignationListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Bulk Upload Template returns an xlsx file")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Bulk Upload Template returns an xlsx file")
     @Story("Get Bulk Upload Template")
     @Description("Verified live: HTTP 200, Content-Type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, non-empty body.")
     public void getBulkUploadTemplateReturnsXlsx() {
@@ -74,7 +74,7 @@ public class DesignationListApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Template file should not be empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Permissions List without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Permissions List without authentication fails")
     @Story("Get Permissions List")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getPermissionsListWithoutAuthFails() {

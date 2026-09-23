@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Users")
 public class UserListApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Users returns a paginated list of users")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Users returns a paginated list of users")
     @Story("List Users")
     @Description("Verified live: HTTP 200, data.data is a non-empty array of users.")
     public void listUsersReturnsPaginatedUsers() {
@@ -31,7 +31,7 @@ public class UserListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty for this tenant");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Users without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Users without authentication fails")
     @Story("List Users")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listUsersWithoutAuthFails() {
@@ -41,7 +41,7 @@ public class UserListApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List All Users returns the full user array")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List All Users returns the full user array")
     @Story("List All Users")
     @Description("Verified live: HTTP 200, data is a non-empty array.")
     public void listAllUsersReturnsAllUsers() {
@@ -52,7 +52,7 @@ public class UserListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty for this tenant");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Unique Users returns a de-duplicated user array")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Unique Users returns a de-duplicated user array")
     @Story("List Unique Users")
     @Description("Verified live: HTTP 200, data is a non-empty array.")
     public void listUniqueUsersReturnsUsers() {
@@ -63,7 +63,7 @@ public class UserListApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty for this tenant");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get User by ID returns the user's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get User by ID returns the user's details")
     @Story("Get User by ID")
     @Description("Verified live: HTTP 200 for the logged-in user's own id (1), with name/email present.")
     public void getUserByIdReturnsUserDetails() {
@@ -75,7 +75,7 @@ public class UserListApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.email"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get User by ID with a non-existent id fails")
+    @Test(groups = {"regression", "negative"}, description = "Get User by ID with a non-existent id fails")
     @Story("Get User by ID")
     @Description("Verified live: HTTP 400, message 'User not found' (not 404).")
     public void getUserByIdWithNonExistentIdFails() {

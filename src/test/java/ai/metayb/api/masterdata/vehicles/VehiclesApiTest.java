@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Master Data - Vehicles")
 public class VehiclesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Vehicle Types returns the configured vehicle types")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Vehicle Types returns the configured vehicle types")
     @Story("Get Vehicle Types")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, name, status}.")
     public void getVehicleTypesReturnsTypes() {
@@ -33,7 +33,7 @@ public class VehiclesApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns existing vehicles")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get All returns existing vehicles")
     @Story("Get All")
     @Description("Verified live: HTTP 200, data.data is a non-empty array of {id, vehicleNumber, vehicleOwner, status}.")
     public void getAllReturnsVehicles() {
@@ -43,7 +43,7 @@ public class VehiclesApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Vehicle by ID returns a real vehicle's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Vehicle by ID returns a real vehicle's details")
     @Story("Get Vehicle by ID")
     @Description("Verified live: HTTP 200 for id=77, data.vehicleNumber present.")
     public void getVehicleByIdReturnsDetails() {
@@ -54,7 +54,7 @@ public class VehiclesApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.vehicleNumber"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Vehicle by ID with a non-existent id fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Vehicle by ID with a non-existent id fails")
     @Story("Get Vehicle by ID")
     @Description("Verified live: HTTP 400, message 'Vehicle with ID 999999 not found'.")
     public void getVehicleByIdWithNonExistentIdFails() {
@@ -64,7 +64,7 @@ public class VehiclesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Vehicle with ID 999999 not found");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Vehicles By Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = {"regression"}, description = "Get Vehicles By Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Vehicles By Location")
     @Description("Verified live: HTTP 400, message 'Invalid query parameters'. The Postman collection's saved " +
             "request for this endpoint has no query string, so this is what literally replaying it produces - " +
@@ -76,7 +76,7 @@ public class VehiclesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid query parameters");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Vehicle Types without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Vehicle Types without authentication fails")
     @Story("Get Vehicle Types")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getVehicleTypesWithoutAuthFails() {

@@ -26,7 +26,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
 
     private static final String TODAY = java.time.LocalDate.now().toString();
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Status Summary returns today's field-user status counts")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Status Summary returns today's field-user status counts")
     @Story("Status Summary")
     @Description("Verified live: HTTP 200, data.statusSummary present with day_started_users/active_users/total_activities.")
     public void statusSummaryReturnsCounts() {
@@ -37,7 +37,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.statusSummary"), "data.statusSummary should be present");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "User Attendance returns attendance data for today")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "User Attendance returns attendance data for today")
     @Story("User Attendance")
     @Description("Verified live: HTTP 200.")
     public void userAttendanceReturnsData() {
@@ -48,7 +48,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Total Activities returns activity counts for today")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Total Activities returns activity counts for today")
     @Story("Total Activities")
     @Description("Verified live: HTTP 200.")
     public void totalActivitiesReturnsCounts() {
@@ -59,7 +59,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "User Login Times returns login-time data for today")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "User Login Times returns login-time data for today")
     @Story("User Login Times")
     @Description("Verified live: HTTP 200.")
     public void userLoginTimesReturnsData() {
@@ -70,7 +70,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Weekly Activity Trend returns trend data")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Weekly Activity Trend returns trend data")
     @Story("Weekly Activity Trend")
     @Description("Verified live: HTTP 200.")
     public void weeklyActivityTrendReturnsData() {
@@ -81,7 +81,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Activity Table returns a paginated activity table")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Activity Table returns a paginated activity table")
     @Story("Activity Table")
     @Description("Verified live: HTTP 200 (page=1, pageSize=20).")
     public void activityTableReturnsPaginatedData() {
@@ -92,7 +92,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "regression"}, description = "Filtered Users by Category, called exactly as the Postman collection defines it, currently errors server-side")
+    @Test(groups = { "regression"}, description = "Filtered Users by Category, called exactly as the Postman collection defines it, currently errors server-side")
     @Story("Filtered Users by Category")
     @Description("Verified live: HTTP 500 'Internal Server Error' - reproduced with both today's date and the " +
             "Postman collection's own pinned example date (2026-09-16), ruling out a date-related cause. Every " +
@@ -108,7 +108,7 @@ public class FwmDashboardApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), false);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Status Summary without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Status Summary without authentication fails")
     @Story("Status Summary")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void statusSummaryWithoutAuthFails() {

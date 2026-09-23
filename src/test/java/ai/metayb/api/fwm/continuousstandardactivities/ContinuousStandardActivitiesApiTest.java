@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Continuous Standard Activities")
 public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Continuous Standard Activities returns existing continuous activities")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "List Continuous Standard Activities returns existing continuous activities")
     @Story("List Continuous Standard Activities")
     @Description("Verified live: HTTP 200, data is a non-empty array of {standardActivityId, workflowsCount, usersCount}.")
     public void listContinuousStandardActivitiesReturnsActivities() {
@@ -37,7 +37,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Entity Filters by ID returns available workflows for a real standard activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Entity Filters by ID returns available workflows for a real standard activity")
     @Story("Get Workflow Entity Filters by ID")
     @Description("Verified live: HTTP 200 for id=432, data.workflows is a non-empty array.")
     public void getWorkflowEntityFiltersByIdReturnsWorkflows() {
@@ -47,7 +47,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.workflows").isEmpty(), "data.workflows should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Assignments by ID returns real user assignments for a real standard activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Assignments by ID returns real user assignments for a real standard activity")
     @Story("Get Assignments by ID")
     @Description("Verified live: HTTP 200 for id=432, data is a non-empty array of real {id, configGroupId, userId, userName}.")
     public void getAssignmentsByIdReturnsAssignments() {
@@ -57,7 +57,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Check by ID reports workflow creation status for a real standard activity")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Workflow Check by ID reports workflow creation status for a real standard activity")
     @Story("Get Workflow Check by ID")
     @Description("Verified live: HTTP 200 for id=432, data.isWorkflowCreated present (true - asserted as observed).")
     public void getWorkflowCheckByIdReturnsStatus() {
@@ -67,7 +67,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("data.isWorkflowCreated"), true);
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Schedule Assignments, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"regression"}, description = "Get Schedule Assignments, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Schedule Assignments")
     @Description("Verified live: HTTP 400, message describes 3 missing/invalid inputs - Postman's saved request has no query params, documented per Step 8.")
     public void getScheduleAssignmentsAsDefinedInPostmanReturnsValidationError() {
@@ -77,7 +77,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("Invalid input"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Assign Users, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Assign Users, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Assign Users")
     @Description("Verified live: HTTP 400, message 'Invalid input' - same gap as Get Schedule Assignments. " +
             "Note this Postman request is a GET despite its name suggesting a mutation.")
@@ -88,7 +88,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid input");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Submissions by ID, called with only the real standard activity id, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Submissions by ID, called with only the real standard activity id, returns a validation error")
     @Story("Get Submissions by ID")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected number, received NaN' - this " +
             "endpoint needs additional query params Postman's saved request doesn't specify, documented per Step 8.")
@@ -99,7 +99,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("NaN"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Continuous Standard Activities without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Continuous Standard Activities without authentication fails")
     @Story("List Continuous Standard Activities")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listContinuousStandardActivitiesWithoutAuthFails() {
@@ -109,7 +109,7 @@ public class ContinuousStandardActivitiesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "NOT AUTOMATED: GET .../submissions/:submissionId requires a real submissionId that could not be discovered anywhere in this environment")
     @Story("Get Submissions by ID (with submissionId)")
     @Description("Requires unavailable test data: the base Get Submissions by ID call (see above) itself " +

@@ -28,7 +28,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - App Settings")
 public class StageAllowedApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get stage allowed returns a boolean isAllowed flag")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get stage allowed returns a boolean isAllowed flag")
     @Story("Stage Allowed")
     @Description("Verified live: HTTP 200, data.isAllowed present as a boolean, for stage=APPROVED, budgetId=1 " +
             "(the collection's own default variable values).")
@@ -40,7 +40,7 @@ public class StageAllowedApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.isAllowed"), "Response should include data.isAllowed");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get stage allowed without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get stage allowed without authentication fails")
     @Story("Stage Allowed")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getStageAllowedWithoutAuthFails() {

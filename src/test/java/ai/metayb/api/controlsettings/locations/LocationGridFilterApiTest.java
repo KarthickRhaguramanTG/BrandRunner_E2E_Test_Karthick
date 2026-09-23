@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Locations")
 public class LocationGridFilterApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Grid Filter Hierarchies returns hierarchy filter options")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Grid Filter Hierarchies returns hierarchy filter options")
     @Story("Get Grid Filter Hierarchies")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, code, level, label}.")
     public void getGridFilterHierarchiesReturnsOptions() {
@@ -29,7 +29,7 @@ public class LocationGridFilterApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Grid Filter Options, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Grid Filter Options, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Grid Filter Options")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected number, received NaN'.")
     public void getGridFilterOptionsAsDefinedInPostmanReturnsValidationError() {
@@ -39,7 +39,7 @@ public class LocationGridFilterApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid input: expected number, received NaN");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Grid Filter Chain, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Grid Filter Chain, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Grid Filter Chain")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected number, received NaN' - same gap as Get Grid Filter Options.")
     public void getGridFilterChainAsDefinedInPostmanReturnsValidationError() {
@@ -49,7 +49,7 @@ public class LocationGridFilterApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid input: expected number, received NaN");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Grid Filter Hierarchies without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Grid Filter Hierarchies without authentication fails")
     @Story("Get Grid Filter Hierarchies")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getGridFilterHierarchiesWithoutAuthFails() {

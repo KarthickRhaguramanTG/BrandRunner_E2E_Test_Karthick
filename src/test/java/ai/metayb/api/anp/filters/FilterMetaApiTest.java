@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Filters")
 public class FilterMetaApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filter Meta returns the location filter/zone metadata")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Filter Meta returns the location filter/zone metadata")
     @Story("Get Filter Meta")
     @Description("Verified live: HTTP 200, data is a non-empty array with 'filters' (location type levels) and 'zoneData'.")
     public void getFilterMetaReturnsZoneData() {
@@ -36,7 +36,7 @@ public class FilterMetaApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data[0].filters").isEmpty(), "data[0].filters should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Filter Meta without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Filter Meta without authentication fails")
     @Story("Get Filter Meta")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getFilterMetaWithoutAuthFails() {
@@ -46,7 +46,7 @@ public class FilterMetaApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filter Meta (v2 alias) returns the same data as the primary path")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Filter Meta (v2 alias) returns the same data as the primary path")
     @Story("Get Filter Meta (v2 alias)")
     @Description("Verified live: HTTP 200 with the same success/data shape as /web/anp-filters/meta - confirms this is a genuine alias.")
     public void getFilterMetaV2AliasReturnsSameShape() {

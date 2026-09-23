@@ -28,28 +28,28 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Activities")
 public class ActivityWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PATCH /web/activity/:id/status (Activate/Deactivate) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Status by ID")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void updateStatusByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/activity/section-fields (14 field-type variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Section Fields")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void sectionFieldsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"regression"},
             description = "BLOCKED: POST /web/activity/activity-details (4 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Activity Details")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void activityDetailsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"regression"},
             description = "BLOCKED: POST /web/activity/create-activity (6 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Activity")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")

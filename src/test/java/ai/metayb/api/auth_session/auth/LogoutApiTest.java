@@ -29,7 +29,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class LogoutApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Logout with a valid session succeeds")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Logout with a valid session succeeds")
     @Story("Logout")
     @Description("Verified live: HTTP 200, message 'Logged out successfully', using the suite's " +
             "authenticated requestSpecification (Authorization + business_unit + tenant).")
@@ -43,7 +43,7 @@ public class LogoutApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Logged out successfully");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Logout without any authentication fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Logout without any authentication fails")
     @Story("Logout")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void logoutWithoutAuthenticationFails() {
@@ -56,7 +56,7 @@ public class LogoutApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Logout authenticated but missing the business_unit header fails")
+    @Test(groups = { "regression", "negative"}, description = "Logout authenticated but missing the business_unit header fails")
     @Story("Logout")
     @Description("Verified live: HTTP 401, message 'You do not have access to this business unit.' - " +
             "distinct from the no-auth case, proving the token itself IS recognized and only the " +

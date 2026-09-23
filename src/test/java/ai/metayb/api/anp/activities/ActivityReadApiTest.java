@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Activities")
 public class ActivityReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Activity List All returns every activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Activity List All returns every activity")
     @Story("Get Activity List All")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, name, category, status, mode}.")
     public void getActivityListAllReturnsActivities() {
@@ -33,7 +33,7 @@ public class ActivityReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Activity List returns a paginated activity list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Activity List returns a paginated activity list")
     @Story("Get Activity List")
     @Description("Verified live: HTTP 200 (page=1, limit=20), data.data is a non-empty array.")
     public void getActivityListReturnsPaginatedActivities() {
@@ -44,7 +44,7 @@ public class ActivityReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Designation Location by ID responds successfully for a real activity id")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Designation Location by ID responds successfully for a real activity id")
     @Story("Get Designation Location by ID")
     @Description("Verified live: HTTP 200 for activityId=16 - data is null for this id (no designation-location " +
             "mapping exists for it), asserted as observed rather than assuming non-null content.")
@@ -55,7 +55,7 @@ public class ActivityReadApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Activity List All without authentication fails")
+    @Test(groups = {"regression", "negative"}, description = "Get Activity List All without authentication fails")
     @Story("Get Activity List All")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getActivityListAllWithoutAuthFails() {

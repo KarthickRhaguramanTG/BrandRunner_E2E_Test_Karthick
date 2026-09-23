@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class VerifyResetTokenApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Verifying an invalid reset token fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Verifying an invalid reset token fails")
     @Story("Verify Reset Token")
     @Description("Verified live: HTTP 400, message 'Invalid or expired reset token'.")
     public void verifyResetTokenWithInvalidTokenFails() throws Exception {
@@ -37,7 +37,7 @@ public class VerifyResetTokenApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid or expired reset token");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Verifying with the token field missing fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Verifying with the token field missing fails")
     @Story("Verify Reset Token")
     @Description("Verified live: HTTP 400, message 'Token is required'.")
     public void verifyResetTokenWithMissingTokenFieldFails() throws Exception {

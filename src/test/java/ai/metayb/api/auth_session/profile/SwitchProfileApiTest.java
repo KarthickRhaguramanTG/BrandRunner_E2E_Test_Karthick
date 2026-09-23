@@ -30,7 +30,7 @@ import testUtils.BaseApiTest;
 @Feature("Profile")
 public class SwitchProfileApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: /web/profile/switch returns the CloudFront/S3 SPA fallback, not JSON, in QA")
     @Story("Switch Profile")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

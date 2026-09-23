@@ -31,28 +31,28 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Filters")
 public class FilterCascadeApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-filters/locations (all 6 cascade variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Filter Locations")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void getFilterLocationsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-filters/activities (both variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Filter Activities")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void getFilterActivitiesNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/filters/locations (v2 alias, all 5 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Filter Locations (v2 alias)")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void getFilterLocationsV2AliasNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/filters/activities (v2 alias, both variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Filter Activities (v2 alias)")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

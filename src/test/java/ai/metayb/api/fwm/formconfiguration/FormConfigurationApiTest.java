@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Form Configuration")
 public class FormConfigurationApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression"}, description = "Get Form Configuration, called exactly as the Postman collection defines it, currently errors server-side")
+    @Test(groups = {"sanity", "regression"}, description = "Get Form Configuration, called exactly as the Postman collection defines it, currently errors server-side")
     @Story("Get Form Configuration")
     @Description("Verified live: HTTP 500 with a raw SQL query fragment in the error message - a real backend " +
             "bug (see class Javadoc), documented as observed behavior per Step 8 rather than asserting a " +
@@ -39,7 +39,7 @@ public class FormConfigurationApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), false);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Form Configuration without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Form Configuration without authentication fails")
     @Story("Get Form Configuration")
     @Description("Verified live: HTTP 401, message 'Authentication token missing' - the auth check happens " +
             "before the query that produces the 500 above, so this negative case is unaffected by that bug.")
@@ -50,7 +50,7 @@ public class FormConfigurationApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PUT /web/form-config/upsert-form-config returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upsert Form Configuration")
     @Description("Blocked by the same systemic environment issue confirmed throughout this folder - directly verified live. Not executed.")

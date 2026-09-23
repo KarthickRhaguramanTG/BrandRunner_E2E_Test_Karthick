@@ -42,7 +42,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Public, Maintenance & Cron - Public Sales")
 public class PublicSalesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Sales Details View by Share Token without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Sales Details View by Share Token without authentication fails")
     @Story("Get Sales Details View by Share Token")
     @Description("Verified live: HTTP 401, message 'Authentication token missing' - despite being tagged 'noauth' in Postman, this route genuinely requires a valid token. See class Javadoc.")
     public void getSalesDetailsViewByShareTokenWithoutAuthFails() {
@@ -53,7 +53,7 @@ public class PublicSalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Sales Details View by Share Token, even fully authenticated, is not a registered backend route")
+    @Test(groups = {"sanity", "regression"}, description = "Get Sales Details View by Share Token, even fully authenticated, is not a registered backend route")
     @Story("Get Sales Details View by Share Token")
     @Description("Verified live: HTTP 400, message \"Can't find /web/public/sales-details/placeholder-token/view on this server!!!\" - a real Postman-vs-backend gap, documented as observed per Step 8. See class Javadoc.")
     public void getSalesDetailsViewByShareTokenNotARegisteredRoute() {
@@ -65,7 +65,7 @@ public class PublicSalesApiTest extends BaseApiTest {
                 "Expected a route-not-found style message, got: " + response.jsonPath().getString("message"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Sales Details by Share Token with an unknown share token fails")
+    @Test(groups = {"sanity", "regression"}, description = "Get Sales Details by Share Token with an unknown share token fails")
     @Story("Get Sales Details by Share Token")
     @Description("Verified live: HTTP 401, message 'Invalid share link' - genuinely validates the token itself, independent of auth. No real, currently-valid share token is known to exist in this tenant (test data unavailable) - see class Javadoc.")
     public void getSalesDetailsByShareTokenWithUnknownTokenFails() {
@@ -76,7 +76,7 @@ public class PublicSalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid share link");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Sales Details, called exactly as Postman defines it (no share link, no auth), returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Sales Details, called exactly as Postman defines it (no share link, no auth), returns a validation error")
     @Story("Get Sales Details")
     @Description("Verified live: HTTP 401, message 'Authentication or a valid share link is required' - confirms this endpoint supports either mode. Postman's saved example has no query string, documented per Step 8.")
     public void getSalesDetailsWithoutShareLinkOrAuthFails() {
@@ -86,7 +86,7 @@ public class PublicSalesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication or a valid share link is required");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Sales Details, authenticated but missing the required identifying query params, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Sales Details, authenticated but missing the required identifying query params, returns a validation error")
     @Story("Get Sales Details")
     @Description("Verified live: HTTP 400, message 'workflow_id, user_id, form_data_id and cart_id are required for authenticated access' - proves the authenticated mode is real and validated. No real sales workflow data is known to exist to supply these IDs (test data unavailable).")
     public void getSalesDetailsAuthenticatedWithoutRequiredParamsFails() {
@@ -97,7 +97,7 @@ public class PublicSalesApiTest extends BaseApiTest {
                 "workflow_id, user_id, form_data_id and cart_id are required for authenticated access");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Stock Pickup by Share Token with an unknown share token fails")
+    @Test(groups = {"sanity", "regression"}, description = "Get Stock Pickup by Share Token with an unknown share token fails")
     @Story("Get Stock Pickup by Share Token")
     @Description("Verified live: HTTP 401, message 'Invalid share link'. No real, currently-valid share token is known to exist in this tenant (test data unavailable) - see class Javadoc.")
     public void getStockPickupByShareTokenWithUnknownTokenFails() {

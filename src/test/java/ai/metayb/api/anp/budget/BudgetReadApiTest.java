@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Budget")
 public class BudgetReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval Levels returns the configured approval level order")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approval Levels returns the configured approval level order")
     @Story("Get Approval Levels")
     @Description("Verified live: HTTP 200, data.approvalLevelOrders is a non-empty array.")
     public void getApprovalLevelsReturnsOrder() {
@@ -37,7 +37,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.approvalLevelOrders").isEmpty(), "approvalLevelOrders should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Budget List returns existing budgets")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Budget List returns existing budgets")
     @Story("Get Budget List")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, activityName, title, requestedAmount}.")
     public void getBudgetListReturnsBudgets() {
@@ -47,7 +47,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Standard Activity Fields returns the configured fields for a real standard activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Standard Activity Fields returns the configured fields for a real standard activity")
     @Story("Get Standard Activity Fields")
     @Description("Verified live: HTTP 200 for standardActivityId=558, data.sections is a non-empty array.")
     public void getStandardActivityFieldsReturnsSections() {
@@ -57,7 +57,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.sections").isEmpty(), "data.sections should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Preview Budget returns the budget's preview details for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Preview Budget returns the budget's preview details for a real budget")
     @Story("Preview Budget")
     @Description("Verified live: HTTP 200 for budgetId=18, data.title/data.sections present.")
     public void previewBudgetReturnsDetails() {
@@ -68,7 +68,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.sections").isEmpty(), "data.sections should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Actual by Budget ID returns the budget's actual-entry details for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Actual by Budget ID returns the budget's actual-entry details for a real budget")
     @Story("Get Actual by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetId matches, data.sections present.")
     public void getActualByBudgetIdReturnsDetails() {
@@ -78,7 +78,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 18);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Edit by Budget ID returns the budget's editable form data for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Edit by Budget ID returns the budget's editable form data for a real budget")
     @Story("Get Edit by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetInfo present.")
     public void getEditByBudgetIdReturnsFormData() {
@@ -88,7 +88,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.budgetInfo"), "data.budgetInfo should be present");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approved List returns approved budgets")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approved List returns approved budgets")
     @Story("Get Approved List")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, activityName, title, status: 'approved'}.")
     public void getApprovedListReturnsApprovedBudgets() {
@@ -98,7 +98,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Standard Activity All returns every standard activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Standard Activity All returns every standard activity")
     @Story("Get Standard Activity All")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, uuid, name, mode, status}.")
     public void getStandardActivityAllReturnsActivities() {
@@ -108,7 +108,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Activities returns a dropdown of standard activities")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Activities returns a dropdown of standard activities")
     @Story("Get Activities")
     @Description("Verified live: HTTP 200, data.items is a non-empty array of {id, name}.")
     public void getActivitiesReturnsDropdown() {
@@ -118,7 +118,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.items").isEmpty(), "data.items should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Branding Master by Property ID returns branding info for a real property")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Branding Master by Property ID returns branding info for a real property")
     @Story("Get Branding Master by Property ID")
     @Description("Verified live: HTTP 200 for propertyId=1, data is a non-empty array with basicInfo/budgetInfo.")
     public void getBrandingMasterByPropertyIdReturnsDetails() {
@@ -128,7 +128,7 @@ public class BudgetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Budget List without authentication fails")
+    @Test(groups = {"regression", "negative"}, description = "Get Budget List without authentication fails")
     @Story("Get Budget List")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getBudgetListWithoutAuthFails() {

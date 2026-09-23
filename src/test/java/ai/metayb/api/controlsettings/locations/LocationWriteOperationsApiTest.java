@@ -28,56 +28,56 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Locations")
 public class LocationWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/location (Root location / Child location) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Location")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void createLocationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/location/hierarchy returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Hierarchy")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void createHierarchyNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: DELETE /web/location/hierarchy/reset/:businessUnitId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Reset Hierarchy by Business Unit ID")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void resetHierarchyNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/location/bulk returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Bulk")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void bulkCreateNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: PUT /web/location/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Location")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void updateLocationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: DELETE /web/location/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Location")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void deleteLocationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/location/apply-location returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Apply Location")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void applyLocationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/location/bulk-upload returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Bulk")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

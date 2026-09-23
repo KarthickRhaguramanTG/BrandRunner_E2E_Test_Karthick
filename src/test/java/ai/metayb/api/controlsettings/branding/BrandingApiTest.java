@@ -18,7 +18,7 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Branding")
 public class BrandingApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/branding/list returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Branding")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

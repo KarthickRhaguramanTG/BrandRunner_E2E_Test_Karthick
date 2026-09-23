@@ -21,21 +21,21 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Business Units")
 public class BusinessUnitWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/business-unit returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Business Unit")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void createBusinessUnitNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PUT /web/business-unit/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Business Unit")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void updateBusinessUnitNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: DELETE /web/business-unit/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Business Unit")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

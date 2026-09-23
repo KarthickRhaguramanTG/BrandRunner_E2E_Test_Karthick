@@ -21,19 +21,19 @@ import testUtils.BaseApiTest;
 @Feature("Master Data - Vehicles")
 public class VehiclesWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PATCH /web/vehicle/:id/status (Activate/Deactivate, 2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PATCH /web/vehicle/:id/status (Activate/Deactivate, 2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Status by ID")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void updateStatusByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/vehicle/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/vehicle/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/vehicle/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/vehicle/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update by ID")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void updateByIdNotAutomatedDueToEnvironmentIssue() {

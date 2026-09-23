@@ -28,7 +28,7 @@ import testUtils.BaseApiTest;
 @Feature("Public, Maintenance & Cron - Maintenance")
 public class DbTenantMigrateApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/maintenance/db/tenant-migrate is a real DB migration operation - not exercised without explicit human authorization")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/maintenance/db/tenant-migrate is a real DB migration operation - not exercised without explicit human authorization")
     @Story("Db Tenant Migrate")
     @Description("Blocked for safety, not by the environment - see class Javadoc. Not executed.")
     public void dbTenantMigrateNotAutomatedForSafety() {

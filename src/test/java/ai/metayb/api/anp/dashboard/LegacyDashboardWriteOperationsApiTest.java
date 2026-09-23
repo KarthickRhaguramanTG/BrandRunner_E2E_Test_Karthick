@@ -26,28 +26,28 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Legacy Dashboard v1")
 public class LegacyDashboardWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard/overview (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Dashboard Overview")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void dashboardOverviewNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard/pending-actions (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Dashboard Pending Actions")
     @Description("Blocked by environment - same route family as Dashboard Overview. See class Javadoc. Not executed.")
     public void dashboardPendingActionsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard/vendors (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Dashboard Vendors")
     @Description("Blocked by environment - same route family as Dashboard Overview. See class Javadoc. Not executed.")
     public void dashboardVendorsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"regression"},
             description = "BLOCKED: POST /web/anp-dashboard/all (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Dashboard All (Legacy)")
     @Description("Blocked by environment - same route family as Dashboard Overview. See class Javadoc. Not executed.")

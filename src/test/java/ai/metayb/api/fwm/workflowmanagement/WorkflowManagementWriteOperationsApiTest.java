@@ -19,49 +19,49 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Workflow Management")
 public class WorkflowManagementWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/workflow/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/workflow/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/workflow/ai-create-project returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/workflow/ai-create-project returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("AI Create Project")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void aiCreateProjectNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/workflow/duplicate/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/workflow/duplicate/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Duplicate by ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void duplicateByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/workflow/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/workflow/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update by ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void updateByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/workflow/delete/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: DELETE /web/workflow/delete/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete by ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void deleteByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PATCH /web/workflow/activate/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PATCH /web/workflow/activate/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Activate by ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void activateByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/workflow/upload-sales-logo returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: POST /web/workflow/upload-sales-logo returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Sales Logo")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void uploadSalesLogoNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/workflow/upload-qr-code returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: POST /web/workflow/upload-qr-code returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload QR Code")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void uploadQrCodeNotAutomatedDueToEnvironmentIssue() {

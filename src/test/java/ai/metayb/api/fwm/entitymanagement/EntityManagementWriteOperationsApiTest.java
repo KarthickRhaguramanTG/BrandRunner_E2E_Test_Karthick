@@ -20,49 +20,49 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Entity Management")
 public class EntityManagementWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/entity/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/entity/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/entity/media/upload returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/entity/media/upload returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Media")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void uploadMediaNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/entity/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/entity/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Entity Management")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateEntityManagementNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/entity/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: DELETE /web/entity/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Entity Management")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteEntityManagementNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/entity/:id/line-items/bulk returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/entity/:id/line-items/bulk returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Line Items Bulk by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void lineItemsBulkByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/entity/:id/line-items returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: POST /web/entity/:id/line-items returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Line Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void lineItemsByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/entity/:id/line-items/:lineItemId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/entity/:id/line-items/:lineItemId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Line Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateLineItemsByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/entity/:id/line-items/:lineItemId returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: DELETE /web/entity/:id/line-items/:lineItemId returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete Line Items by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteLineItemsByIdNotAutomatedDueToEnvironmentIssue() {

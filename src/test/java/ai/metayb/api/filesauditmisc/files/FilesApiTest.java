@@ -36,7 +36,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Files, Audit & Misc - Files")
 public class FilesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Public File by Folder Name/Filename works without any authentication")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Public File by Folder Name/Filename works without any authentication")
     @Story("Get Public File by Folder Name / Filename")
     @Description("Verified live: HTTP 400, message 'Image Not Found', called with a placeholder folder/filename " +
             "(no real uploaded file's path is known - see class Javadoc). Confirms the endpoint is genuinely " +
@@ -49,7 +49,7 @@ public class FilesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Image Not Found");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Protected File by Folder Name/Filename without any authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Protected File by Folder Name/Filename without any authentication fails")
     @Story("Get Protected File by Folder Name / Filename")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'. Unlike 'Public Files', this " +
             "route inherits the collection's bearer auth in Postman and genuinely enforces it server-side.")
@@ -61,7 +61,7 @@ public class FilesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Protected File by Folder Name/Filename authenticated but missing the business_unit header fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Protected File by Folder Name/Filename authenticated but missing the business_unit header fails")
     @Story("Get Protected File by Folder Name / Filename")
     @Description("Verified live: HTTP 401, message 'You do not have access to this business unit.' - distinct " +
             "from the no-auth case, proving the token itself IS recognized and only business-unit scoping fails.")
@@ -77,7 +77,7 @@ public class FilesApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "You do not have access to this business unit.");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Protected File by Folder Name/Filename, fully authenticated, returns not-found for a placeholder file")
+    @Test(groups = { "regression"}, description = "Get Protected File by Folder Name/Filename, fully authenticated, returns not-found for a placeholder file")
     @Story("Get Protected File by Folder Name / Filename")
     @Description("Verified live: HTTP 400, message 'Image Not Found', with full auth + tenant + business_unit " +
             "headers. Called with a placeholder folder/filename - see class Javadoc for why no real file is used.")

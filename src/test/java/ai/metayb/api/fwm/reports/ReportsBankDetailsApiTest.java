@@ -25,7 +25,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Reports - Bank Details")
 public class ReportsBankDetailsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Report Details is denied for a user without the bank-details-report permission")
+    @Test(groups = { "regression", "negative"}, description = "Get Report Details is denied for a user without the bank-details-report permission")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 400, message 'Permission denied: USER_BANK_DETAILS_REPORT'.")
     public void getReportDetailsIsDeniedForUnauthorizedUser() {
@@ -35,7 +35,7 @@ public class ReportsBankDetailsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Permission denied: USER_BANK_DETAILS_REPORT");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get User Listing is denied for a user without the bank-details-report permission")
+    @Test(groups = { "regression", "negative"}, description = "Get User Listing is denied for a user without the bank-details-report permission")
     @Story("Get User Listing")
     @Description("Verified live: HTTP 400, message 'Permission denied: USER_BANK_DETAILS_REPORT' - same as Get Report Details.")
     public void getUserListingIsDeniedForUnauthorizedUser() {
@@ -45,7 +45,7 @@ public class ReportsBankDetailsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Permission denied: USER_BANK_DETAILS_REPORT");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get User Bank Details is denied for a user without the bank-details-report permission")
+    @Test(groups = { "regression", "negative"}, description = "Get User Bank Details is denied for a user without the bank-details-report permission")
     @Story("Get User Bank Details")
     @Description("Verified live: HTTP 400, message 'Permission denied: USER_BANK_DETAILS_REPORT' - same as Get Report Details.")
     public void getUserBankDetailsIsDeniedForUnauthorizedUser() {

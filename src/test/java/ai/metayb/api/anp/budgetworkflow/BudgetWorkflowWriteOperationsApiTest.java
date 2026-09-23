@@ -22,49 +22,49 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Budget Workflow")
 public class BudgetWorkflowWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-workflow/workflow/bulk-action returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Workflow Bulk Action")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void workflowBulkActionNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/submit returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Submit by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void submitByBudgetIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/workflow/action returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Workflow Action by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void workflowActionNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/submit-actuals returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Submit Actuals by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void submitActualsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/workflow/comment returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Workflow Comment by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void workflowCommentNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/acknowledgeActivityPerformance returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Acknowledge Activity Performance by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void acknowledgeActivityPerformanceNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-workflow/:budgetId/upload-actuals returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Actuals by Budget ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")

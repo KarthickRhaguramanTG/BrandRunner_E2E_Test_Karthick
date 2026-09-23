@@ -28,21 +28,21 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Budget Actuals")
 public class BudgetActualsWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-actuals/:budgetId/actuals/submit returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Submit Budget Actuals")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void submitBudgetActualsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-actuals/:budgetId/actuals-preview returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Preview Budget Actuals")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void previewBudgetActualsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/budget-actuals/actuals/:actualMasterId/finalize-approval returns the CloudFront/S3 SPA fallback, not JSON - also requires an actualMasterId that doesn't exist in this environment")
     @Story("Finalize Actuals Approval")
     @Description("Blocked by environment AND by unavailable test data (no real actualMasterId exists). See class Javadoc. Not executed.")

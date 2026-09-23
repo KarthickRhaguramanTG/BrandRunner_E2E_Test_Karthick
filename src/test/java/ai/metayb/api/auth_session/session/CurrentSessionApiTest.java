@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Session")
 public class CurrentSessionApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get current session returns the logged-in user's session details")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get current session returns the logged-in user's session details")
     @Story("Current Session")
     @Description("Verified live: HTTP 200 with id/name/email/roleId/roleName/businessUnitId/permissions.")
     public void getCurrentSessionReturnsSessionDetails() {
@@ -34,7 +34,7 @@ public class CurrentSessionApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.permissions").isEmpty(), "Session should include a non-empty permissions list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get current session without an Authorization header fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Get current session without an Authorization header fails")
     @Story("Current Session")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getCurrentSessionWithoutAuthFails() {
@@ -44,7 +44,7 @@ public class CurrentSessionApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get current session with an invalid bearer token fails")
+    @Test(groups = { "regression", "negative"}, description = "Get current session with an invalid bearer token fails")
     @Story("Current Session")
     @Description("Verified live: HTTP 401, message 'Invalid or expired token' - distinct from the missing-token message.")
     public void getCurrentSessionWithInvalidTokenFails() {

@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Profile")
 public class SwitchableUsersApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List switchable users returns the accounts this user can switch into")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List switchable users returns the accounts this user can switch into")
     @Story("Switchable Users")
     @Description("Verified live: HTTP 200 with a data.users array (each with id/uuid/name/email/isActive/businessUnitId).")
     public void listSwitchableUsersReturnsUserList() {
@@ -29,7 +29,7 @@ public class SwitchableUsersApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.users"), "Response should include a data.users list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List switchable users without authentication fails")
+    @Test(groups = {"regression", "sanitys", "negative"}, description = "List switchable users without authentication fails")
     @Story("Switchable Users")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listSwitchableUsersWithoutAuthFails() {

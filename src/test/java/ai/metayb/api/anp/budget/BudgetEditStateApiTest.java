@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Budget")
 public class BudgetEditStateApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Pre Update Form Fields by Budget ID returns form data for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Pre Update Form Fields by Budget ID returns form data for a real budget")
     @Story("Get Pre Update Form Fields by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetInfo present.")
     public void getPreUpdateFormFieldsReturnsData() {
@@ -30,7 +30,7 @@ public class BudgetEditStateApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.budgetInfo"), "data.budgetInfo should be present");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Pre Update Activity by Budget ID is rejected while the budget is not in the required state")
+    @Test(groups = {"sanity", "regression"}, description = "Get Pre Update Activity by Budget ID is rejected while the budget is not in the required state")
     @Story("Get Pre Update Activity by Budget ID")
     @Description("Verified live: HTTP 400, message 'Pre-update activity is only accessible when status is " +
             "'pre_update_activity_pending'. Current: pre_activity_rejected' - budgetId=18's real current status " +
@@ -45,7 +45,7 @@ public class BudgetEditStateApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("pre_update_activity_pending"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Edit Bulk by Budget Group ID with a non-existent group id fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Edit Bulk by Budget Group ID with a non-existent group id fails")
     @Story("Get Edit Bulk by Budget Group ID")
     @Description("Verified live: HTTP 500, message 'No budgets found for this group'. No API in this collection " +
             "exposes a real budgetGroupId value (Get Budget List's items carry no group field), so no positive " +

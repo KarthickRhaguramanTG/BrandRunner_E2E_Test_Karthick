@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Tenant & BU Settings")
 public class AiIntegrationStatusApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get AI integration status returns whether AI is enabled")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get AI integration status returns whether AI is enabled")
     @Story("AI Integration Status")
     @Description("Verified live: HTTP 200, 'AI integration status fetched successfully', data.aiEnabled boolean present.")
     public void getAiIntegrationStatusReturnsFlag() {
@@ -30,7 +30,7 @@ public class AiIntegrationStatusApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.aiEnabled"), "Response should include data.aiEnabled");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get AI integration status without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get AI integration status without authentication fails")
     @Story("AI Integration Status")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAiIntegrationStatusWithoutAuthFails() {

@@ -28,7 +28,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Budget Approval")
 public class BudgetApprovalApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval FWM Details by Budget ID returns FWM integration details for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approval FWM Details by Budget ID returns FWM integration details for a real budget")
     @Story("Get Approval FWM Details by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.isFWMIntegrated present (false for this budget).")
     public void getApprovalFwmDetailsReturnsData() {
@@ -38,7 +38,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.isFWMIntegrated"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval Master Options by Budget ID returns the master option lists for a real budget")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Approval Master Options by Budget ID returns the master option lists for a real budget")
     @Story("Get Approval Master Options by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.masterOptions is a non-empty object.")
     public void getApprovalMasterOptionsReturnsOptions() {
@@ -48,7 +48,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.masterOptions"), "data.masterOptions should be present");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval Activity Media by Budget ID returns the media listing for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approval Activity Media by Budget ID returns the media listing for a real budget")
     @Story("Get Approval Activity Media by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.items is an array (empty for this budget - " +
             "asserted as observed; this is also why the paired Download request cannot be automated - see class Javadoc).")
@@ -59,7 +59,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.items"), "data.items should be a list (may be empty)");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval Reference by Budget ID returns reference details for a real budget")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Approval Reference by Budget ID returns reference details for a real budget")
     @Story("Get Approval Reference by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetCode present.")
     public void getApprovalReferenceReturnsDetails() {
@@ -69,7 +69,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.budgetCode"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Approval by Budget ID returns the full approval record for a real budget")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Approval by Budget ID returns the full approval record for a real budget")
     @Story("Get Approval by Budget ID")
     @Description("Verified live: HTTP 200 for budgetId=18, data.budgetId matches.")
     public void getApprovalByBudgetIdReturnsRecord() {
@@ -79,7 +79,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 18);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Approval by Budget ID without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Approval by Budget ID without authentication fails")
     @Story("Get Approval by Budget ID")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getApprovalByBudgetIdWithoutAuthFails() {
@@ -89,7 +89,7 @@ public class BudgetApprovalApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "NOT AUTOMATED: GET .../approval/activity-media/:mediaId/download requires a real mediaId that does not exist in this environment")
     @Story("Download Approval Activity Media by Budget ID")
     @Description("Requires unavailable test data: Get Approval Activity Media confirms budgetId=18 has zero " +

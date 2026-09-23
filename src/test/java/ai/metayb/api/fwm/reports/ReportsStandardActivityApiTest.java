@@ -20,7 +20,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
 
     private static final String TODAY = java.time.LocalDate.now().toString();
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filters returns the report's filter options")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Filters returns the report's filter options")
     @Story("Get Filters")
     @Description("Verified live: HTTP 200, data.designations is a non-empty array.")
     public void getFiltersReturnsOptions() {
@@ -31,7 +31,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.designations").isEmpty(), "data.designations should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get User Listing")
     @Description("Verified live: HTTP 500, message lists 'activityId is required' - Postman's saved request has " +
             "no activityId param, documented per Step 8 rather than inventing one.")
@@ -43,7 +43,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("activityId is required"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 500, message lists 'activityId is required' - same gap as Get User Listing.")
     public void getReportDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -54,7 +54,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("activityId is required"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Submissions by ID with a non-existent submission fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Submissions by ID with a non-existent submission fails")
     @Story("Get Submissions by ID")
     @Description("Verified live: HTTP 400, message 'Activity form submission not found' for id=432 (a real " +
             "standard activity id, but not a real submission id - no positive scenario is automated since no " +
@@ -66,7 +66,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Activity form submission not found");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Filters without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Filters without authentication fails")
     @Story("Get Filters")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getFiltersWithoutAuthFails() {
@@ -77,7 +77,7 @@ public class ReportsStandardActivityApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/standard-activity-report/submissions/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: PUT /web/standard-activity-report/submissions/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Submissions by ID")
     @Description("Blocked by the same systemic CloudFront/S3 SPA-fallback root cause confirmed throughout this folder. Not executed.")
     public void updateSubmissionsByIdNotAutomatedDueToEnvironmentIssue() {

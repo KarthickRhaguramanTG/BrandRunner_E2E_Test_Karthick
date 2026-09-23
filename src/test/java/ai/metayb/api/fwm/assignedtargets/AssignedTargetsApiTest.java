@@ -21,7 +21,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Assigned Targets")
 public class AssignedTargetsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Assigned Targets returns the (empty) assigned-targets list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Assigned Targets returns the (empty) assigned-targets list")
     @Story("List Assigned Targets")
     @Description("Verified live: HTTP 200, 'Assigned targets fetched successfully', data.data is an empty array - " +
             "asserted as observed (this QA tenant has no assigned targets, and Create is blocked).")
@@ -33,7 +33,7 @@ public class AssignedTargetsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.data"), "data.data should be a list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Assigned Target by ID with a non-existent id fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Assigned Target by ID with a non-existent id fails")
     @Story("Get Assigned Target by ID")
     @Description("Verified live: HTTP 400, message 'Assigned target not found'. No positive scenario is " +
             "automated here - List Assigned Targets confirms zero real records exist in this tenant.")
@@ -44,7 +44,7 @@ public class AssignedTargetsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Assigned target not found");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Assigned Targets without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Assigned Targets without authentication fails")
     @Story("List Assigned Targets")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listAssignedTargetsWithoutAuthFails() {
@@ -54,13 +54,13 @@ public class AssignedTargetsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/assigned-targets/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/assigned-targets/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by the same systemic CloudFront/S3 SPA-fallback root cause confirmed throughout this folder. Directly verified live. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/assigned-targets/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/assigned-targets/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update by ID")
     @Description("Blocked by environment - same route family. Not executed.")
     public void updateByIdNotAutomatedDueToEnvironmentIssue() {

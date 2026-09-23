@@ -31,7 +31,7 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - App Settings")
 public class SaveAppSettingsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/settings/app-settings returns the CloudFront/S3 SPA fallback, not JSON, in QA")
     @Story("Save App Settings")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

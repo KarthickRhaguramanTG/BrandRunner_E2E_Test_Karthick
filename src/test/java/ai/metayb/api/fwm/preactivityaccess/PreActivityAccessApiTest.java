@@ -21,7 +21,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Pre-Activity Access")
 public class PreActivityAccessApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Activity Access by Designation returns per-activity permission grids")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Activity Access by Designation returns per-activity permission grids")
     @Story("Get Activity Access by Designation")
     @Description("Verified live: HTTP 200, data is a non-empty array of {initiationStatus, activityId, activityName, permissions}.")
     public void getActivityAccessByDesignationReturnsGrid() {
@@ -31,7 +31,7 @@ public class PreActivityAccessApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Activity Access by Designation without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Activity Access by Designation without authentication fails")
     @Story("Get Activity Access by Designation")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getActivityAccessByDesignationWithoutAuthFails() {

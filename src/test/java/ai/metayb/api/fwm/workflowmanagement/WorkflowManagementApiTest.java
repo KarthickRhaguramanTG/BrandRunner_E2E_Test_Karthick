@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Workflow Management")
 public class WorkflowManagementApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Workflow Management returns existing workflows")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "List Workflow Management returns existing workflows")
     @Story("List Workflow Management")
     @Description("Verified live: HTTP 200 (page=1, limit=20), data.data is a non-empty array of {workflowRefId, standardActivityId, activeVersion}.")
     public void listWorkflowManagementReturnsWorkflows() {
@@ -33,7 +33,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Management by ID returns a real workflow's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Management by ID returns a real workflow's details")
     @Story("Get Workflow Management by ID")
     @Description("Verified live: HTTP 200 for id=508, data.name/data.workflowStatus present.")
     public void getWorkflowManagementByIdReturnsDetails() {
@@ -44,7 +44,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.name"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Versions by ID returns version history for a real workflow")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Versions by ID returns version history for a real workflow")
     @Story("Get Versions by ID")
     @Description("Verified live: HTTP 200 for id=508, data is a non-empty array.")
     public void getVersionsByIdReturnsHistory() {
@@ -54,7 +54,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Versions Standard Activity returns workflows for a real standard activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Versions Standard Activity returns workflows for a real standard activity")
     @Story("Get Versions Standard Activity")
     @Description("Verified live: HTTP 200 for standardActivityId=432, data is a non-empty array.")
     public void getVersionsStandardActivityReturnsWorkflows() {
@@ -64,7 +64,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get AI Projects returns the AI project list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get AI Projects returns the AI project list")
     @Story("Get AI Projects")
     @Description("Verified live: HTTP 200, 'AI projects fetched successfully', data.projects present (empty - asserted as observed).")
     public void getAiProjectsReturnsList() {
@@ -74,7 +74,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.projects"), "data.projects should be a list");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get AI Models, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "Get AI Models, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get AI Models")
     @Description("Verified live: HTTP 400, message 'project_id is required, task_type must be a valid AI task type'. " +
             "Postman's saved request has no query string - documented per Step 8 rather than inventing one.")
@@ -85,7 +85,7 @@ public class WorkflowManagementApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "project_id is required, task_type must be a valid AI task type");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Workflow Management without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Workflow Management without authentication fails")
     @Story("List Workflow Management")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listWorkflowManagementWithoutAuthFails() {

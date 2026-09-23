@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Gallery")
 public class GalleryApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Standardactivity returns standard activity data for a location")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Standardactivity returns standard activity data for a location")
     @Story("Get Standardactivity")
     @Description("Verified live: HTTP 200 for locationIds=1, 'Standard activity data fetched successfully', data is a list (empty - asserted as observed).")
     public void getStandardactivityReturnsData() {
@@ -34,7 +34,7 @@ public class GalleryApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Activityform returns activity form data for a standard activity")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Activityform returns activity form data for a standard activity")
     @Story("Get Activityform")
     @Description("Verified live: HTTP 200 for standardActivityId=1, 'Activity form data fetched successfully', data is a list (empty - asserted as observed).")
     public void getActivityformReturnsData() {
@@ -44,7 +44,7 @@ public class GalleryApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Info, called exactly as the Postman collection defines it, currently errors server-side")
+    @Test(groups = { "regression"}, description = "Get User Info, called exactly as the Postman collection defines it, currently errors server-side")
     @Story("Get User Info")
     @Description("Verified live: HTTP 500 with a raw SQL query fragment in the error message - a real backend " +
             "bug (see class Javadoc and FormConfigurationApiTest for the sibling instance), documented as " +
@@ -56,7 +56,7 @@ public class GalleryApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), false);
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Gallery Data, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Gallery Data, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Gallery Data")
     @Description("Verified live: HTTP 500, message 'startDate and endDate are required' - Postman's saved " +
             "request for this one has no date params, documented per Step 8 rather than inventing them.")
@@ -68,7 +68,7 @@ public class GalleryApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "startDate and endDate are required");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Standardactivity without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Standardactivity without authentication fails")
     @Story("Get Standardactivity")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getStandardactivityWithoutAuthFails() {

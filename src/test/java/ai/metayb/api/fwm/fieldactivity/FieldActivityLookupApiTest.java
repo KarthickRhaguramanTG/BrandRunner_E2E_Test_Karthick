@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Field Activity")
 public class FieldActivityLookupApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Location By Filter returns the location list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Location By Filter returns the location list")
     @Story("Get Location By Filter")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, name, parentId, hierarchyId}.")
     public void getLocationByFilterReturnsLocations() {
@@ -34,7 +34,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Users returns the user list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Users returns the user list")
     @Story("Get Users")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, name, email, designationId}.")
     public void getUsersReturnsUserList() {
@@ -44,7 +44,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Locations returns the location list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Locations returns the location list")
     @Story("Get Locations")
     @Description("Verified live: HTTP 200, data is a non-empty array (same shape as Get Location By Filter).")
     public void getLocationsReturnsLocations() {
@@ -54,7 +54,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Distributor By Product, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Distributor By Product, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Distributor By Product")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected string, received undefined'. " +
             "Postman's saved request has no query string - documented per Step 8 rather than inventing one.")
@@ -65,7 +65,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("expected string"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Overdue Assignment Due Dates, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Overdue Assignment Due Dates, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Overdue Assignment Due Dates")
     @Description("Verified live: HTTP 400, message 'userIds is required'.")
     public void getOverdueAssignmentDueDatesAsDefinedInPostmanReturnsValidationError() {
@@ -75,7 +75,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "userIds is required");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Route Plan Progress, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Route Plan Progress, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Route Plan Progress")
     @Description("Verified live: HTTP 400, message 'Invalid or missing monthwiseMappingId'.")
     public void getRoutePlanProgressAsDefinedInPostmanReturnsValidationError() {
@@ -85,7 +85,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid or missing monthwiseMappingId");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Dynamic Report Designation, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Dynamic Report Designation, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Dynamic Report Designation")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected string, received undefined'.")
     public void getDynamicReportDesignationAsDefinedInPostmanReturnsValidationError() {
@@ -95,7 +95,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("expected string"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Forms By Workflow, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Forms By Workflow, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Forms By Workflow")
     @Description("Verified live: HTTP 400, message 'Budget undefined not found or not mapped to a standard activity'.")
     public void getFormsByWorkflowAsDefinedInPostmanReturnsValidationError() {
@@ -105,7 +105,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("not found or not mapped"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Report Details, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 400, message 'budget_id is required'.")
     public void getReportDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -115,7 +115,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "budget_id is required");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Supervisor Reconcile Details by ID, called with only the real activity id, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Supervisor Reconcile Details by ID, called with only the real activity id, returns a validation error")
     @Story("Get Supervisor Reconcile Details by ID")
     @Description("Verified live: HTTP 400, message lists 3 missing/invalid fields (Postman's saved request for " +
             "this one has no extra query params either) - documented per Step 8 rather than inventing them.")
@@ -126,7 +126,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("Invalid input"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Promoter Close Sale Details by ID, called with only the real activity id, returns a validation error")
+    @Test(groups = {"sanity", "regression"}, description = "Get Promoter Close Sale Details by ID, called with only the real activity id, returns a validation error")
     @Story("Get Promoter Close Sale Details by ID")
     @Description("Verified live: HTTP 400, message lists 2 missing/invalid fields - same gap as Get Supervisor Reconcile Details.")
     public void getPromoterCloseSaleDetailsAsDefinedInPostmanReturnsValidationError() {
@@ -136,7 +136,7 @@ public class FieldActivityLookupApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("Invalid input"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Users without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Users without authentication fails")
     @Story("Get Users")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getUsersWithoutAuthFails() {

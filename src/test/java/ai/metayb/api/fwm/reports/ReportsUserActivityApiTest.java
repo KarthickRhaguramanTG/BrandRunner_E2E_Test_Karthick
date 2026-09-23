@@ -20,7 +20,7 @@ public class ReportsUserActivityApiTest extends BaseApiTest {
 
     private static final String TODAY = java.time.LocalDate.now().toString();
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filters returns the user activity report's filter options")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Filters returns the user activity report's filter options")
     @Story("Get Filters")
     @Description("Verified live: HTTP 200, data.designations is a non-empty array.")
     public void getFiltersReturnsOptions() {
@@ -31,7 +31,7 @@ public class ReportsUserActivityApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.designations").isEmpty(), "data.designations should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Report Details returns user activity report records")
+    @Test(groups = {"sanity","sanity", "positive"}, description = "Get Report Details returns user activity report records")
     @Story("Get Report Details")
     @Description("Verified live: HTTP 200 (startDate=2026-09-01, endDate=today, page=1, limit=20), data.records is a non-empty array.")
     public void getReportDetailsReturnsRecords() {
@@ -42,7 +42,7 @@ public class ReportsUserActivityApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.records").isEmpty(), "data.records should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get User Listing, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get User Listing")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - Postman's saved request has no userId param, documented per Step 8.")
     public void getUserListingAsDefinedInPostmanReturnsValidationError() {
@@ -53,7 +53,7 @@ public class ReportsUserActivityApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Detail, called exactly as the Postman collection defines it, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Detail, called exactly as the Postman collection defines it, returns a validation error")
     @Story("Get Detail")
     @Description("Verified live: HTTP 500, message lists 'userId' as missing/invalid - same gap as Get User Listing.")
     public void getDetailAsDefinedInPostmanReturnsValidationError() {
@@ -63,7 +63,7 @@ public class ReportsUserActivityApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("userId"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Filters without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Filters without authentication fails")
     @Story("Get Filters")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getFiltersWithoutAuthFails() {

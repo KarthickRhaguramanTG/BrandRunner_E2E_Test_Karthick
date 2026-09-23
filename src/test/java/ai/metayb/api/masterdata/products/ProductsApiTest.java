@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Master Data - Products")
 public class ProductsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Products returns existing products")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Products returns existing products")
     @Story("List Products")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, businessUnitId, name, productCode}.")
     public void listProductsReturnsProducts() {
@@ -32,7 +32,7 @@ public class ProductsApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Details by ID returns a real product's details")
+    @Test(groups = {"regression", "smoke", "positive"}, description = "Get Details by ID returns a real product's details")
     @Story("Get Details by ID")
     @Description("Verified live: HTTP 200 for id=1770, data.name/data.productCode present.")
     public void getDetailsByIdReturnsDetails() {
@@ -43,7 +43,7 @@ public class ProductsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.name"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Details by ID with a non-existent id fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Details by ID with a non-existent id fails")
     @Story("Get Details by ID")
     @Description("Verified live: HTTP 400, message 'Product not found'.")
     public void getDetailsByIdWithNonExistentIdFails() {
@@ -53,7 +53,7 @@ public class ProductsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Product not found");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Fabric Connection Check returns the fabric integration status")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Fabric Connection Check returns the fabric integration status")
     @Story("Get Fabric Connection Check")
     @Description("Verified live: HTTP 200, 'Connection status fetched successfully', data.type/data.connection present.")
     public void getFabricConnectionCheckReturnsStatus() {
@@ -64,7 +64,7 @@ public class ProductsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.connection"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Products without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Products without authentication fails")
     @Story("List Products")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listProductsWithoutAuthFails() {

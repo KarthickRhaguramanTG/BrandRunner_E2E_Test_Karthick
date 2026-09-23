@@ -23,7 +23,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Tenant & BU Settings")
 public class GoogleMapKeyApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Google Map API key returns a non-blank key")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Google Map API key returns a non-blank key")
     @Story("Google Map API Key")
     @Description("Verified live: HTTP 200, 'Google map key fetched successfully', data.googleMapKey non-blank. " +
             "The key value itself is never asserted, logged, or printed - only its presence.")
@@ -38,7 +38,7 @@ public class GoogleMapKeyApiTest extends BaseApiTest {
         Assert.assertFalse(key.isBlank(), "data.googleMapKey must not be blank");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Google Map API key without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Google Map API key without authentication fails")
     @Story("Google Map API Key")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getGoogleMapKeyWithoutAuthFails() {

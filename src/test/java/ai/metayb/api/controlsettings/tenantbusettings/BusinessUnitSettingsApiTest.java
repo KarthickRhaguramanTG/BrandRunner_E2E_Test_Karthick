@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Tenant & BU Settings")
 public class BusinessUnitSettingsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get business unit settings returns the BU's configuration")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get business unit settings returns the BU's configuration")
     @Story("Business Unit Settings")
     @Description("Verified live: HTTP 200, 'Business unit settings fetched successfully', with a CURRENCY settings group present.")
     public void getBusinessUnitSettingsReturnsConfiguration() {
@@ -30,7 +30,7 @@ public class BusinessUnitSettingsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.CURRENCY"), "Should include a CURRENCY settings group");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get business unit settings without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get business unit settings without authentication fails")
     @Story("Business Unit Settings")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getBusinessUnitSettingsWithoutAuthFails() {

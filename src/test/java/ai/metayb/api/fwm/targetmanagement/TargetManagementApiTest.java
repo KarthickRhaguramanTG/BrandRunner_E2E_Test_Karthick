@@ -21,7 +21,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Target Management")
 public class TargetManagementApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Target Management returns existing targets")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Target Management returns existing targets")
     @Story("List Target Management")
     @Description("Verified live: HTTP 200 (page=1, limit=20), data.data is a non-empty array of {id, targetName, workflowId}.")
     public void listTargetManagementReturnsTargets() {
@@ -31,7 +31,7 @@ public class TargetManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Target Management by ID returns a real target's details")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Target Management by ID returns a real target's details")
     @Story("Get Target Management by ID")
     @Description("Verified live: HTTP 200 for id=56, data.targetName present.")
     public void getTargetManagementByIdReturnsDetails() {
@@ -42,7 +42,7 @@ public class TargetManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.targetName"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Options returns workflows available for targeting")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Options returns workflows available for targeting")
     @Story("Get Workflow Options")
     @Description("Verified live: HTTP 200 (page=1, limit=20), data.data is a non-empty array.")
     public void getWorkflowOptionsReturnsOptions() {
@@ -52,7 +52,7 @@ public class TargetManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Target Management without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Target Management without authentication fails")
     @Story("List Target Management")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listTargetManagementWithoutAuthFails() {

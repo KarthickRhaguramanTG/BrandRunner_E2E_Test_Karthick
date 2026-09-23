@@ -24,28 +24,28 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Approver Dashboard")
 public class ApproverDashboardWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/approver/my-approvals (6 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("My Approvals")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void myApprovalsNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/approver/approval-status (9 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Approval Status")
     @Description("Blocked by environment - same route family as My Approvals. See class Javadoc. Not executed.")
     public void approvalStatusNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/approver/pending-approval-aging (9 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Approver Pending Aging")
     @Description("Blocked by environment - same route family as My Approvals. See class Javadoc. Not executed.")
     public void approverPendingAgingNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/anp-dashboard-v2/approver/recent-pending-requests (9 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Recent Pending Requests")
     @Description("Blocked by environment - same route family as My Approvals. See class Javadoc. Not executed.")

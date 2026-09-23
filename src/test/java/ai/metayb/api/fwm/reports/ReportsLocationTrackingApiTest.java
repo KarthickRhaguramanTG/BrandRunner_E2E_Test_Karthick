@@ -20,19 +20,19 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Reports - Location Tracking")
 public class ReportsLocationTrackingApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUsers (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUsers (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Live Tracking Users")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void getLiveTrackingUsersNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUserActivityListing returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUserActivityListing returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get User Activity Listing")
     @Description("Blocked by environment - same route family. Not executed.")
     public void getUserActivityListingNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUserLiveLocation returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/user-location-tracking/getUserLiveLocation returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get User Live Location")
     @Description("Blocked by environment - same route family. Not executed.")
     public void getUserLiveLocationNotAutomatedDueToEnvironmentIssue() {

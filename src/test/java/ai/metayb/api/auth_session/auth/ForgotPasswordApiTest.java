@@ -34,7 +34,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class ForgotPasswordApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Forgot password with a known, registered email succeeds")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Forgot password with a known, registered email succeeds")
     @Story("Forgot Password")
     @Description("Verified live: HTTP 200, message 'A reset link has been sent to your email'.")
     public void forgotPasswordWithKnownEmailSucceeds() throws Exception {
@@ -45,7 +45,7 @@ public class ForgotPasswordApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "A reset link has been sent to your email");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Forgot password with an unregistered email is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Forgot password with an unregistered email is rejected")
     @Story("Forgot Password")
     @Description("Verified live: HTTP 400, message 'This email is not registered. Please register before using " +
             "forgot password' - unlike Login, this endpoint DOES reveal whether an email is registered.")
@@ -57,7 +57,7 @@ public class ForgotPasswordApiTest extends BaseApiTest {
                 "This email is not registered. Please register before using forgot password");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Forgot password with the email field missing is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Forgot password with the email field missing is rejected")
     @Story("Forgot Password")
     @Description("Verified live: HTTP 400, message 'Validation Error', errors.email contains 'Email is required'.")
     public void forgotPasswordWithMissingEmailFieldIsRejected() throws Exception {

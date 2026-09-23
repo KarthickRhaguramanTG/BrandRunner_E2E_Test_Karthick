@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Users")
 public class UserLookupApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Designation Dropdown returns designation options")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Designation Dropdown returns designation options")
     @Story("List Designation Dropdown")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, label}.")
     public void listDesignationDropdownReturnsOptions() {
@@ -34,7 +34,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty for this tenant");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Users by Designation returns users for a designation id")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Users by Designation returns users for a designation id")
     @Story("List Users by Designation")
     @Description("Verified live: HTTP 200 for designation id=1, data.users present.")
     public void listUsersByDesignationReturnsUsers() {
@@ -44,7 +44,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.users"), "Response should include data.users");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List User Locations returns the location tree")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List User Locations returns the location tree")
     @Story("List User Locations")
     @Description("Verified live: HTTP 200, data is a non-empty array.")
     public void listUserLocationsReturnsLocations() {
@@ -54,7 +54,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty for this tenant");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Designation Dropdown without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Designation Dropdown without authentication fails")
     @Story("List Designation Dropdown")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listDesignationDropdownWithoutAuthFails() {
@@ -64,7 +64,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression"}, description = "List Users by Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "List Users by Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("List Users by Location")
     @Description("Verified live: HTTP 400, message 'Invalid query parameters'. The Postman collection's saved " +
             "request for this endpoint has no query string at all, so this is what literally replaying it " +
@@ -77,7 +77,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid query parameters");
     }
 
-    @Test(groups = {"api", "regression"}, description = "List Users by Permission, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "List Users by Permission, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("List Users by Permission")
     @Description("Verified live: HTTP 400, message 'Invalid query parameters' - same gap as List Users by Location.")
     public void listUsersByPermissionAsDefinedInPostmanReturnsValidationError() {
@@ -87,7 +87,7 @@ public class UserLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid query parameters");
     }
 
-    @Test(groups = {"api", "regression"}, description = "List Location Hierarchies, called exactly as the Postman collection defines it, currently errors server-side")
+    @Test(groups = {"sanity", "regression"}, description = "List Location Hierarchies, called exactly as the Postman collection defines it, currently errors server-side")
     @Story("List Location Hierarchies")
     @Description("Verified live: HTTP 500, message 'Cannot read properties of undefined (reading '0')' - a real " +
             "backend crash when called with only the standard tenant/business_unit headers Postman's saved " +

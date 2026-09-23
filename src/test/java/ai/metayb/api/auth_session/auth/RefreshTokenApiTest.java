@@ -25,7 +25,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class RefreshTokenApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Refreshing with a valid refresh token succeeds")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Refreshing with a valid refresh token succeeds")
     @Story("Token Refresh")
     @Description("Verified live: reuses the refreshToken captured at suite login. Confirmed safe to reuse - " +
             "this API does not rotate or invalidate refresh tokens on use, and does not invalidate the prior " +
@@ -39,7 +39,7 @@ public class RefreshTokenApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getBoolean("success"), true);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Refreshing with an invalid refresh token fails")
+    @Test(groups = { "regression", "negative"}, description = "Refreshing with an invalid refresh token fails")
     @Story("Token Refresh")
     @Description("Verified live: HTTP 500, message 'invalid token'. Documented as observed behavior - " +
             "a malformed/garbage token surfacing as 500 rather than 401 is an application-side finding, " +
@@ -51,7 +51,7 @@ public class RefreshTokenApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "invalid token");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Refreshing with the refreshToken field missing fails")
+    @Test(groups = { "regression", "negative"}, description = "Refreshing with the refreshToken field missing fails")
     @Story("Token Refresh")
     @Description("Verified live: HTTP 401, message 'Refresh token missing'.")
     public void refreshWithMissingRefreshTokenFieldFails() throws Exception {

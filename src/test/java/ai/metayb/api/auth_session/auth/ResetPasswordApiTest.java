@@ -28,7 +28,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class ResetPasswordApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Resetting a password with an invalid token fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Resetting a password with an invalid token fails")
     @Story("Reset Password")
     @Description("Verified live: HTTP 400, message 'Invalid or expired reset token' - same message/status as " +
             "Verify Reset Token's equivalent case, consistent with shared token-validation logic.")
@@ -39,7 +39,7 @@ public class ResetPasswordApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Invalid or expired reset token");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Resetting a password with the password field missing is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Resetting a password with the password field missing is rejected")
     @Story("Reset Password")
     @Description("Verified live: HTTP 400, message 'Validation Error', errors.password contains 'Password is required'.")
     public void resetPasswordWithMissingPasswordFieldIsRejected() throws Exception {

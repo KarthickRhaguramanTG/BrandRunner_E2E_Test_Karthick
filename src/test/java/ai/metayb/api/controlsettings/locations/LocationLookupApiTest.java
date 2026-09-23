@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Locations")
 public class LocationLookupApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Business Units returns the tenant's business units")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Business Units returns the tenant's business units")
     @Story("Get Business Units")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, uuid, name}.")
     public void getBusinessUnitsReturnsUnits() {
@@ -30,7 +30,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Business Location returns the caller's accessible business entries")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Business Location returns the caller's accessible business entries")
     @Story("Get Business Location")
     @Description("Verified live: HTTP 200, data is a non-empty array of {dbId, id, name}.")
     public void getBusinessLocationReturnsEntries() {
@@ -40,7 +40,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get User Location returns the hierarchy definitions for the logged-in user")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get User Location returns the hierarchy definitions for the logged-in user")
     @Story("Get User Location")
     @Description("Verified live: HTTP 200, data.hierarchies is a non-empty array.")
     public void getUserLocationReturnsHierarchies() {
@@ -50,7 +50,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.hierarchies").isEmpty(), "data.hierarchies should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All Business returns a dropdown of business names")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get All Business returns a dropdown of business names")
     @Story("Get All Business")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, label}.")
     public void getAllBusinessReturnsDropdown() {
@@ -60,7 +60,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Business By ID returns the caller's own business unit as a dropdown entry")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Business By ID returns the caller's own business unit as a dropdown entry")
     @Story("Get Business By ID")
     @Description("Verified live: HTTP 200, data is a single-entry array [{id: 1, label: 'Maggie'}].")
     public void getBusinessByIdReturnsOwnBusinessUnit() {
@@ -70,7 +70,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Location By Business Unit returns the BU's location list")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Location By Business Unit returns the BU's location list")
     @Story("Get Location By Business Unit")
     @Description("Verified live: HTTP 200, data is a non-empty array of {locationId, code, level, name}.")
     public void getLocationByBusinessUnitReturnsLocations() {
@@ -80,7 +80,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Location Template returns available country templates")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Location Template returns available country templates")
     @Story("Get Location Template")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, label}.")
     public void getLocationTemplateReturnsTemplates() {
@@ -90,7 +90,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get By Level, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "Get By Level, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get By Level")
     @Description("Verified live: HTTP 400, message 'Business unit ID is required'.")
     public void getByLevelAsDefinedInPostmanReturnsValidationError() {
@@ -100,7 +100,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Business unit ID is required");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Selected Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Selected Location, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Selected Location")
     @Description("Verified live: HTTP 400, message 'Business ID is required'.")
     public void getSelectedLocationAsDefinedInPostmanReturnsValidationError() {
@@ -110,7 +110,7 @@ public class LocationLookupApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Business ID is required");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Business Units without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Business Units without authentication fails")
     @Story("Get Business Units")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getBusinessUnitsWithoutAuthFails() {

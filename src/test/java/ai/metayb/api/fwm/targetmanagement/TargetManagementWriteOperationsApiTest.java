@@ -18,19 +18,19 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Target Management")
 public class TargetManagementWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/targetmanagement/create returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: POST /web/targetmanagement/create returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: PUT /web/targetmanagement/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = {"sanity", "regression"}, description = "BLOCKED: PUT /web/targetmanagement/update/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void updateByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: DELETE /web/targetmanagement/delete/:id returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: DELETE /web/targetmanagement/delete/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete by ID")
     @Description("Blocked by environment - same systemic root cause. Not executed.")
     public void deleteByIdNotAutomatedDueToEnvironmentIssue() {

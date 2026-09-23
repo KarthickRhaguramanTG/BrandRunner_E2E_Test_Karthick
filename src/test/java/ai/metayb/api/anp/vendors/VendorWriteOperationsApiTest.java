@@ -20,28 +20,28 @@ import testUtils.BaseApiTest;
 @Feature("ANP - Vendors")
 public class VendorWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/vendor/create-vendor returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Vendor")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void createVendorNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PUT /web/vendor/update-vendor returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Vendor")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void updateVendorNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: DELETE /web/vendor/delete/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete by ID")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")
     public void deleteByIdNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: POST /web/vendor/bulk-upload returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Bulk")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")

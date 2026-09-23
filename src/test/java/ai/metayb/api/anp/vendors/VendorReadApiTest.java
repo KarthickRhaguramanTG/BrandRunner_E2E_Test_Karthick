@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Vendors")
 public class VendorReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Vendors List returns existing vendors")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Vendors List returns existing vendors")
     @Story("Get Vendors List")
     @Description("Verified live: HTTP 200, data.data is a non-empty array of {id, vendorName, contactPersonName, isActive}.")
     public void getVendorsListReturnsVendors() {
@@ -32,7 +32,7 @@ public class VendorReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Location List returns the location hierarchy tree")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Location List returns the location hierarchy tree")
     @Story("Get Location List")
     @Description("Verified live: HTTP 200, data is a non-empty array of nested {id, name, code, children}.")
     public void getLocationListReturnsHierarchyTree() {
@@ -42,7 +42,7 @@ public class VendorReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Bulk Upload Template returns an xlsx file")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Bulk Upload Template returns an xlsx file")
     @Story("Get Bulk Upload Template")
     @Description("Verified live: HTTP 200, response is a real xlsx file (ZIP signature), non-empty.")
     public void getBulkUploadTemplateReturnsXlsx() {
@@ -52,7 +52,7 @@ public class VendorReadApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Template file should not be empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Vendors List without authentication fails")
+    @Test(groups = {"regression", "negative"}, description = "Get Vendors List without authentication fails")
     @Story("Get Vendors List")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getVendorsListWithoutAuthFails() {

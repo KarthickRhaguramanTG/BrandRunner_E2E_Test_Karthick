@@ -25,7 +25,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Location Master")
 public class LocationMasterApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Location Master returns the (empty) location master list")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "List Location Master returns the (empty) location master list")
     @Story("List Location Master")
     @Description("Verified live: HTTP 200, 'Location masters fetched successfully', data is an empty array - " +
             "asserted as observed (this QA tenant has no location masters, and Create is blocked, so this " +
@@ -38,7 +38,7 @@ public class LocationMasterApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Location Master by ID with a non-existent id fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Location Master by ID with a non-existent id fails")
     @Story("Get Location Master by ID")
     @Description("Verified live: HTTP 400, message 'Location master not found'. No positive scenario is " +
             "automated here - List Location Master confirms zero real records exist in this tenant.")
@@ -49,7 +49,7 @@ public class LocationMasterApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Location master not found");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Location Master without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Location Master without authentication fails")
     @Story("List Location Master")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listLocationMasterWithoutAuthFails() {
@@ -59,7 +59,7 @@ public class LocationMasterApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "NOT AUTOMATED: GET /web/location-master/:id/items requires a real location master id, which does not exist in this environment")
     @Story("Get Items by ID")
     @Description("Requires unavailable test data: List Location Master confirms zero real records exist, and " +
@@ -67,7 +67,7 @@ public class LocationMasterApiTest extends BaseApiTest {
     public void getItemsByIdNotAutomatedDueToMissingTestData() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "NOT AUTOMATED: GET /web/location-master/:id/logs requires a real location master id, which does not exist in this environment")
     @Story("Get Logs by ID")
     @Description("Requires unavailable test data - same reason as Get Items by ID. Not executed.")

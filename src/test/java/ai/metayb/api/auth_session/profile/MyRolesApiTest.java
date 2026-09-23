@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Profile")
 public class MyRolesApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get my roles returns the logged-in user's role designations")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get my roles returns the logged-in user's role designations")
     @Story("My Roles")
     @Description("Verified live: HTTP 200 with a non-empty data.roles array, each entry carrying designationId/designationName.")
     public void getMyRolesReturnsRoleDesignations() {
@@ -30,7 +30,7 @@ public class MyRolesApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.roles[0].designationName"), "Each role should carry a designationName");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get my roles without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get my roles without authentication fails")
     @Story("My Roles")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getMyRolesWithoutAuthFails() {

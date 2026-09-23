@@ -32,35 +32,35 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Users")
 public class UserWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/user (Create · SMS/EMAIL/BOTH login) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create User")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void createUserNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/user/export (All users / Inactive search) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Export Users")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void exportUsersNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PUT /web/user/:id (locations+designations / Deactivate) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update User")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void updateUserNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = { "regression"},
             description = "BLOCKED: DELETE /web/user/:id returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete User")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void deleteUserNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/user/bulk/upload returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Users Bulk File")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

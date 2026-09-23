@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Reports - Attendance")
 public class ReportsAttendanceApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Attendance Report returns the attendance report for a date range")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Attendance Report returns the attendance report for a date range")
     @Story("Get Attendance Report")
     @Description("Verified live: HTTP 200 (page=1, limit=10, startDate=2026-09-01, endDate=today), data is a list (empty - asserted as observed).")
     public void getAttendanceReportReturnsData() {
@@ -30,7 +30,7 @@ public class ReportsAttendanceApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Attendance Report without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Attendance Report without authentication fails")
     @Story("Get Attendance Report")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAttendanceReportWithoutAuthFails() {
@@ -42,7 +42,7 @@ public class ReportsAttendanceApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"}, description = "BLOCKED: POST /web/user-attendance-report/getIndividualattendanceDetails returns the CloudFront/S3 SPA fallback, not JSON")
+    @Test(enabled = false, groups = { "regression"}, description = "BLOCKED: POST /web/user-attendance-report/getIndividualattendanceDetails returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Get Individual Attendance")
     @Description("Blocked by the same systemic CloudFront/S3 SPA-fallback root cause confirmed throughout this folder. Directly verified live. Not executed.")
     public void getIndividualAttendanceNotAutomatedDueToEnvironmentIssue() {

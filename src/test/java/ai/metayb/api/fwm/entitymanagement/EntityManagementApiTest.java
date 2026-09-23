@@ -27,7 +27,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Entity Management")
 public class EntityManagementApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Entity Management returns existing entities")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "List Entity Management returns existing entities")
     @Story("List Entity Management")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, name, entityRefId, status}.")
     public void listEntityManagementReturnsEntities() {
@@ -37,7 +37,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Export returns the entity export data")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Export returns the entity export data")
     @Story("Export")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, ouid, entityId, entityName}.")
     public void exportReturnsEntityData() {
@@ -47,7 +47,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Media Download Url returns a presigned download URL")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Media Download Url returns a presigned download URL")
     @Story("Get Media Download Url")
     @Description("Verified live: HTTP 200, response includes a downloadUrl field. The URL's value is never " +
             "logged or asserted beyond presence - see class Javadoc security note.")
@@ -58,7 +58,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("downloadUrl"), "Response should include a downloadUrl");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Entity Management by ID returns a real entity's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Entity Management by ID returns a real entity's details")
     @Story("Get Entity Management by ID")
     @Description("Verified live: HTTP 200 for id=133, data.entity.name/data.entity.status present.")
     public void getEntityManagementByIdReturnsDetails() {
@@ -69,7 +69,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.entity.name"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Line Items by ID returns line items for a real entity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Line Items by ID returns line items for a real entity")
     @Story("Get Line Items by ID")
     @Description("Verified live: HTTP 200 for id=133, 'Line items fetched successfully', data.items present (empty - asserted as observed).")
     public void getLineItemsByIdReturnsItems() {
@@ -79,7 +79,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.items"), "data.items should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Logs by ID returns audit logs for a real entity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Logs by ID returns audit logs for a real entity")
     @Story("Get Logs by ID")
     @Description("Verified live: HTTP 200 for id=133, 'Entity logs fetched successfully', data present (empty array - asserted as observed).")
     public void getLogsByIdReturnsLogs() {
@@ -89,7 +89,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Data Values by ID, called with only the real entity id, returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Data Values by ID, called with only the real entity id, returns a validation error")
     @Story("Get Data Values by ID")
     @Description("Verified live: HTTP 400, message 'Invalid input: expected string, received undefined' - " +
             "Postman's saved request for this one has no extra query params either, documented per Step 8.")
@@ -100,7 +100,7 @@ public class EntityManagementApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getString("message").contains("expected string"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Entity Management without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Entity Management without authentication fails")
     @Story("List Entity Management")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listEntityManagementWithoutAuthFails() {

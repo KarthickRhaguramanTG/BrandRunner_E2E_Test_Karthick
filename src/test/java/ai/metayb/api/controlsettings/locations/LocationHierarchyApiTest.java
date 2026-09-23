@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Locations")
 public class LocationHierarchyApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Hierarchy returns the business unit's hierarchy levels")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Hierarchy returns the business unit's hierarchy levels")
     @Story("Get Hierarchy")
     @Description("Verified live: HTTP 200, data is a non-empty array of {id, businessUnitId, code, level, count}.")
     public void getHierarchyReturnsLevels() {
@@ -32,7 +32,7 @@ public class LocationHierarchyApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get By Hierarchy returns locations at a given hierarchy level")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get By Hierarchy returns locations at a given hierarchy level")
     @Story("Get By Hierarchy")
     @Description("Verified live: HTTP 200 for hierarchyId=26 (COUNTRY), data is a non-empty array.")
     public void getByHierarchyReturnsLocations() {
@@ -42,7 +42,7 @@ public class LocationHierarchyApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Children by Parent ID returns child locations")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Children by Parent ID returns child locations")
     @Story("Get Children by Parent ID")
     @Description("Verified live: HTTP 200 for parentId=63 (India), data is a non-empty array.")
     public void getChildrenByParentIdReturnsChildren() {
@@ -52,7 +52,7 @@ public class LocationHierarchyApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data").isEmpty(), "data should be non-empty");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Tree by Business Unit ID, called with businessUnitId=1 as the collection's default variable value, is rejected")
+    @Test(groups = { "regression"}, description = "Get Tree by Business Unit ID, called with businessUnitId=1 as the collection's default variable value, is rejected")
     @Story("Get Tree by Business Unit ID")
     @Description("Verified live: HTTP 400, message 'Permission denied: business unit mismatch'. The collection's " +
             "own default businessUnitId variable (1, numeric) does not match the UUID-form business_unit header " +
@@ -64,7 +64,7 @@ public class LocationHierarchyApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Permission denied: business unit mismatch");
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Parents, called exactly as the Postman collection defines it (no query params), returns a validation error")
+    @Test(groups = { "regression"}, description = "Get Parents, called exactly as the Postman collection defines it (no query params), returns a validation error")
     @Story("Get Parents")
     @Description("Verified live: HTTP 400, message 'Business ID is required, Hierarchy ID is required'.")
     public void getParentsAsDefinedInPostmanReturnsValidationError() {
@@ -74,7 +74,7 @@ public class LocationHierarchyApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Business ID is required, Hierarchy ID is required");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Hierarchy without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Hierarchy without authentication fails")
     @Story("Get Hierarchy")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getHierarchyWithoutAuthFails() {

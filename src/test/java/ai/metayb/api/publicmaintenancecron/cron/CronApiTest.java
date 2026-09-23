@@ -39,7 +39,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Public, Maintenance & Cron - Cron")
 public class CronApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Import Fabric without a cron-secret header fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Import Fabric without a cron-secret header fails")
     @Story("Import Fabric")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: missing cron-secret header.'")
     public void importFabricWithoutCronSecretFails() {
@@ -49,7 +49,7 @@ public class CronApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Cron request rejected: missing cron-secret header.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Import Fabric with an invalid cron-secret fails")
+    @Test(groups = { "regression", "negative"}, description = "Import Fabric with an invalid cron-secret fails")
     @Story("Import Fabric")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: invalid cron-secret.' - distinct from the missing-header case, proving the secret is genuinely validated.")
     public void importFabricWithInvalidCronSecretFails() {
@@ -61,7 +61,7 @@ public class CronApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Cron request rejected: invalid cron-secret.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Import Fabric without a tenant header fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Import Fabric without a tenant header fails")
     @Story("Import Fabric")
     @Description("Verified live: HTTP 400, message \"The invoked function is enabled with tenancy configuration. Add a valid tenant ID in your request and try again.\" - a distinct, lower-level guard checked independently of the cron-secret check.")
     public void importFabricWithoutTenantHeaderFails() {
@@ -76,7 +76,7 @@ public class CronApiTest extends BaseApiTest {
                 "The invoked function is enabled with tenancy configuration. Add a valid tenant ID in your request and try again.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Import Distributor Stocks with an invalid cron-secret fails")
+    @Test(groups = { "regression", "negative"}, description = "Import Distributor Stocks with an invalid cron-secret fails")
     @Story("Import Distributor Stocks")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: invalid cron-secret.' - same auth-guard confirmed for Import Fabric.")
     public void importDistributorStocksWithInvalidCronSecretFails() {
@@ -88,7 +88,7 @@ public class CronApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Cron request rejected: invalid cron-secret.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Import Distributors with an invalid cron-secret fails")
+    @Test(groups = { "regression", "negative"}, description = "Import Distributors with an invalid cron-secret fails")
     @Story("Import Distributors")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: invalid cron-secret.' - same auth-guard confirmed for Import Fabric.")
     public void importDistributorsWithInvalidCronSecretFails() {
@@ -100,7 +100,7 @@ public class CronApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Cron request rejected: invalid cron-secret.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Activity Approval Reminders with an invalid cron-secret fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Activity Approval Reminders with an invalid cron-secret fails")
     @Story("Get Activity Approval Reminders")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: invalid cron-secret.' - same auth-guard confirmed for Import Fabric.")
     public void getActivityApprovalRemindersWithInvalidCronSecretFails() {
@@ -112,7 +112,7 @@ public class CronApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Cron request rejected: invalid cron-secret.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Sync Currency with an invalid cron-secret fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Sync Currency with an invalid cron-secret fails")
     @Story("Sync Currency")
     @Description("Verified live: HTTP 401, message 'Cron request rejected: invalid cron-secret.' - same auth-guard confirmed for Import Fabric.")
     public void syncCurrencyWithInvalidCronSecretFails() {

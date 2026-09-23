@@ -43,7 +43,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Files, Audit & Misc - Audit Logs")
 public class AuditLogsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Filter Options returns the available audit log filter values")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Get Filter Options returns the available audit log filter values")
     @Story("Get Filter Options")
     @Description("Verified live: HTTP 200, data.moduleGroups/actionTypes/users are all non-empty arrays.")
     public void getFilterOptionsReturnsOptions() {
@@ -55,7 +55,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.users").isEmpty(), "users should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "List Audit Logs returns a paginated page of audit log entries")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "List Audit Logs returns a paginated page of audit log entries")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 200, default page=1/limit=20, data.data has 20 rows, data.total/totalPages present and consistent (total > 0).")
     public void listAuditLogsReturnsPaginatedData() {
@@ -68,7 +68,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getInt("data.total") > 0, "total should be > 0 - this tenant has audit history");
     }
 
-    @Test(groups = {"api", "regression", "positive"}, description = "List Audit Logs filters correctly by moduleGroup")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "List Audit Logs filters correctly by moduleGroup")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 200, filtering by moduleGroup=Entity returns only rows whose moduleGroup is Entity, with a total distinct from the unfiltered total - proves the filter is real, not a no-op.")
     public void listAuditLogsFiltersByModuleGroup() {
@@ -82,7 +82,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         }
     }
 
-    @Test(groups = {"api", "regression"}, description = "List Audit Logs with a non-existent moduleGroup returns an empty result, not an error")
+    @Test(groups = { "regression"}, description = "List Audit Logs with a non-existent moduleGroup returns an empty result, not an error")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 200 (not 400/404), data.total=0, data.data is empty - the filter degrades to an empty page rather than erroring on an unrecognized value.")
     public void listAuditLogsWithNonExistentModuleGroupReturnsEmptyResult() {
@@ -93,7 +93,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getList("data.data").isEmpty(), "data.data should be empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns the same paginated shape as List Audit Logs")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get All returns the same paginated shape as List Audit Logs")
     @Story("Get All")
     @Description("Verified live: HTTP 200, identical paginated shape to List Audit Logs (page=1/limit=20 by default) - see class Javadoc; this endpoint does not actually return every record unpaginated.")
     public void getAllReturnsPaginatedData() {
@@ -106,7 +106,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getInt("data.total") > 0, "total should be > 0 - this tenant has audit history");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Audit Logs without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "List Audit Logs without authentication fails")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void listAuditLogsWithoutAuthFails() {
@@ -116,7 +116,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Audit Logs authenticated but missing the business_unit header fails")
+    @Test(groups = { "regression", "negative"}, description = "List Audit Logs authenticated but missing the business_unit header fails")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 401, message 'You do not have access to this business unit.' - distinct from the no-auth case, proving the token itself IS recognized and only business-unit scoping fails.")
     public void listAuditLogsAuthenticatedButMissingBusinessUnitHeaderFails() {
@@ -131,7 +131,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "You do not have access to this business unit.");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "List Audit Logs with an invalid tenant header fails")
+    @Test(groups = { "regression", "negative"}, description = "List Audit Logs with an invalid tenant header fails")
     @Story("List Audit Logs")
     @Description("Verified live: HTTP 400, message 'Database connection failed, Please check the tenant ID' - same tenant-resolution behavior confirmed throughout this suite (see LoginApiTest).")
     public void listAuditLogsWithInvalidTenantFails() {
@@ -147,7 +147,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Database connection failed, Please check the tenant ID");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Filter Options without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Filter Options without authentication fails")
     @Story("Get Filter Options")
     @Description("Verified live: HTTP 401, message 'Authentication token missing' - same auth middleware as List Audit Logs.")
     public void getFilterOptionsWithoutAuthFails() {
@@ -157,7 +157,7 @@ public class AuditLogsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get All without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get All without authentication fails")
     @Story("Get All")
     @Description("Verified live: HTTP 401, message 'Authentication token missing' - same auth middleware as List Audit Logs.")
     public void getAllWithoutAuthFails() {

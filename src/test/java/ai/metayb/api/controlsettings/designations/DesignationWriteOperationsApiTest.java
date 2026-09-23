@@ -22,28 +22,28 @@ import testUtils.BaseApiTest;
 @Feature("Control Settings - Designations")
 public class DesignationWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/designation/create-designation returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Create Designation")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void createDesignationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: PUT /web/designation/update-designation returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Designation")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void updateDesignationNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/designation/bulk-upload returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Upload Bulk")
     @Description("Blocked by environment: see class Javadoc. Not executed.")
     public void uploadBulkNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: DELETE /web/designation/delete-list returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Delete List")
     @Description("Blocked by environment: see class Javadoc. Not executed.")

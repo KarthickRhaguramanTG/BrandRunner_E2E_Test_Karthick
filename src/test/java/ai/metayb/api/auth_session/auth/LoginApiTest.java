@@ -36,7 +36,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 public class LoginApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Login with valid QA credentials returns an access token and business unit")
+    @Test(groups = {"sanity", "regression", "positive"}, description = "Login with valid QA credentials returns an access token and business unit")
     @Story("User Login")
     @Severity(SeverityLevel.BLOCKER)
     @Description("Reproduces the Postman collection's Login test script: asserts HTTP 200 " +
@@ -65,7 +65,7 @@ public class LoginApiTest extends BaseApiTest {
         Allure.step("data.user.businessInfo[0].id: " + businessUnitId);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a valid tenant, a valid user, and an invalid password is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Login with a valid tenant, a valid user, and an invalid password is rejected")
     @Story("User Login")
     @Description("Valid tenant (ConfigManager.getApiTenant(), the collection's default 'maggie.qas') + valid " +
             "QA user (credentials.apiEmail) + intentionally wrong password. Verified live: HTTP 400 with " +
@@ -82,7 +82,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertNull(response.getCookie("accessToken"), "No accessToken cookie should be issued on a failed login");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a valid tenant and an invalid/non-existent user is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Login with a valid tenant and an invalid/non-existent user is rejected")
     @Story("User Login")
     @Description("Valid tenant (ConfigManager.getApiTenant()) + a non-existent email + an otherwise well-formed " +
             "password (so a password-format validation error can't be mistaken for this scenario). Verified " +
@@ -97,7 +97,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertNull(response.getCookie("accessToken"), "No accessToken cookie should be issued on a failed login");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a missing password field is rejected with a validation error")
+    @Test(groups = { "regression", "negative"}, description = "Login with a missing password field is rejected with a validation error")
     @Story("User Login")
     @Description("Verified live: HTTP 400, message 'Validation Error', errors.password contains 'Password is required'.")
     public void loginWithMissingPasswordFieldIsRejected() throws Exception {
@@ -109,7 +109,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getList("errors.password", String.class).contains("Password is required"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a missing email field is rejected with a validation error")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Login with a missing email field is rejected with a validation error")
     @Story("User Login")
     @Description("Verified live: HTTP 400, message 'Validation Error', errors.email contains 'Email is required'.")
     public void loginWithMissingEmailFieldIsRejected() throws Exception {
@@ -121,7 +121,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getList("errors.email", String.class).contains("Email is required"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a malformed email format is rejected with a validation error")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Login with a malformed email format is rejected with a validation error")
     @Story("User Login")
     @Description("Verified live: HTTP 400, message 'Validation Error', errors.email contains 'Email must be a email'.")
     public void loginWithMalformedEmailIsRejected() throws Exception {
@@ -133,7 +133,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertTrue(response.jsonPath().getList("errors.email", String.class).contains("Email must be a email"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with the tenant header missing is rejected")
+    @Test(groups = { "regression", "negative"}, description = "Login with the tenant header missing is rejected")
     @Story("User Login")
     @Description("Verified live: HTTP 400, message explains tenancy is required " +
             "('The invoked function is enabled with tenancy configuration...').")
@@ -146,7 +146,7 @@ public class LoginApiTest extends BaseApiTest {
                 "Expected a tenancy-related message, got: " + response.jsonPath().getString("message"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with an invalid tenant header is rejected")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Login with an invalid tenant header is rejected")
     @Story("User Login")
     @Description("Verified live: HTTP 400, message 'Database connection failed, Please check the tenant ID' " +
             "- this app resolves tenants to per-tenant database connections.")
@@ -158,7 +158,7 @@ public class LoginApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Database connection failed, Please check the tenant ID");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Login with a malformed JSON body fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Login with a malformed JSON body fails")
     @Story("User Login")
     @Description("Verified live: HTTP 500 with a raw JSON-parser error message - the API does not " +
             "handle malformed JSON gracefully (returns 500, not 400, and leaks parser internals). " +

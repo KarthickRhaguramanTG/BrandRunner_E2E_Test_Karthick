@@ -24,7 +24,7 @@ import static io.restassured.RestAssured.given;
 @Feature("FWM - Field Activity")
 public class FieldActivityCoreApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Field Activity by ID returns a real activity's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Field Activity by ID returns a real activity's details")
     @Story("Get Field Activity by ID")
     @Description("Verified live: HTTP 200 for id=16, data.title/data.status present.")
     public void getFieldActivityByIdReturnsDetails() {
@@ -35,7 +35,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.status"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Users by ID returns field users and team leads for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Users by ID returns field users and team leads for a real activity")
     @Story("Get Users by ID")
     @Description("Verified live: HTTP 200 for id=16, data.fieldUsers/data.teamLeads present (empty arrays - asserted as observed).")
     public void getUsersByIdReturnsUserLists() {
@@ -46,7 +46,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.teamLeads"), "data.teamLeads should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Individual Users returns individually-assignable users for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Individual Users returns individually-assignable users for a real activity")
     @Story("Get Individual Users")
     @Description("Verified live: HTTP 200 for id=16, data.users present.")
     public void getIndividualUsersReturnsUsers() {
@@ -56,7 +56,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.users"), "data.users should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Assign by ID returns the current assignment state for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Assign by ID returns the current assignment state for a real activity")
     @Story("Assign by ID")
     @Description("Verified live: HTTP 200 for id=16, data.budgetId matches, data.totalAssignments present.")
     public void assignByIdReturnsAssignmentState() {
@@ -66,7 +66,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.budgetId"), 16);
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Check by ID reports workflow creation status for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Check by ID reports workflow creation status for a real activity")
     @Story("Get Workflow Check by ID")
     @Description("Verified live: HTTP 200 for id=16, data.isWorkflowCreated present.")
     public void getWorkflowCheckByIdReturnsStatus() {
@@ -76,7 +76,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.isWorkflowCreated"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Workflow Entity Filters by ID returns available workflows for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Workflow Entity Filters by ID returns available workflows for a real activity")
     @Story("Get Workflow Entity Filters by ID")
     @Description("Verified live: HTTP 200 for id=16, data.workflows is a non-empty array.")
     public void getWorkflowEntityFiltersByIdReturnsWorkflows() {
@@ -86,7 +86,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.workflows").isEmpty(), "data.workflows should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Attendance Summary by ID returns attendance summary for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Attendance Summary by ID returns attendance summary for a real activity")
     @Story("Get Attendance Summary by ID")
     @Description("Verified live: HTTP 200 for id=16, data.data/data.tableData/data.dates present (empty - asserted as observed).")
     public void getAttendanceSummaryByIdReturnsSummary() {
@@ -96,7 +96,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.data"), "data.data should be a list");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Formeventscount by ID returns a form-events count for a real activity")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Formeventscount by ID returns a form-events count for a real activity")
     @Story("Get Formeventscount by ID")
     @Description("Verified live: HTTP 200 for id=16, data.count present.")
     public void getFormeventscountByIdReturnsCount() {
@@ -106,7 +106,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.count"));
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Allocationperproduct by ID returns per-product allocations for a real activity")
+    @Test(groups = {"regressison", "sanity", "positive"}, description = "Get Allocationperproduct by ID returns per-product allocations for a real activity")
     @Story("Get Allocationperproduct by ID")
     @Description("Verified live: HTTP 200 for id=16, data is a list (empty - asserted as observed).")
     public void getAllocationperproductByIdReturnsList() {
@@ -116,7 +116,7 @@ public class FieldActivityCoreApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data"), "data should be a list");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Field Activity by ID without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Field Activity by ID without authentication fails")
     @Story("Get Field Activity by ID")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getFieldActivityByIdWithoutAuthFails() {

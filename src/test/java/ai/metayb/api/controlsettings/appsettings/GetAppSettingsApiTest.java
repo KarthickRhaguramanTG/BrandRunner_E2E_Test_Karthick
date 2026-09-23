@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - App Settings")
 public class GetAppSettingsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get app settings returns stored settings and master data")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get app settings returns stored settings and master data")
     @Story("App Settings")
     @Description("Verified live: HTTP 200 with data.masterData.locationHierarchies and data.storedData.appSettings/campaignWorkflow.")
     public void getAppSettingsReturnsStoredSettings() {
@@ -31,7 +31,7 @@ public class GetAppSettingsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.storedData.appSettings.reconciliationPolicy"));
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get app settings without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get app settings without authentication fails")
     @Story("App Settings")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAppSettingsWithoutAuthFails() {
@@ -41,7 +41,7 @@ public class GetAppSettingsApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get app settings authenticated but missing business_unit header fails")
+    @Test(groups = { "regression", "negative"}, description = "Get app settings authenticated but missing business_unit header fails")
     @Story("App Settings")
     @Description("Verified live: HTTP 401, message 'You do not have access to this business unit.' - same pattern " +
             "confirmed for Logout in the Auth & Session folder.")

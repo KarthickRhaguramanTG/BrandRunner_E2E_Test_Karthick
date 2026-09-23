@@ -21,14 +21,14 @@ import testUtils.BaseApiTest;
 @Feature("FWM - Pre-Activity Access")
 public class PreActivityAccessWriteOperationsApiTest extends BaseApiTest {
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/pre-activity/updateInitiationform (2 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Toggle Initiation Form")
     @Description("Blocked by environment - directly verified live. See class Javadoc. Not executed.")
     public void toggleInitiationFormNotAutomatedDueToEnvironmentIssue() {
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups = {"sanity", "regression"},
             description = "BLOCKED: POST /web/pre-activity/updatePermissions (3 variants) returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Mobile Permissions")
     @Description("Blocked by environment - same route family. See class Javadoc. Not executed.")

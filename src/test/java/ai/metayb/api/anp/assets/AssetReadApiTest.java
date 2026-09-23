@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Assets")
 public class AssetReadApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns existing assets")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get All returns existing assets")
     @Story("Get All")
     @Description("Verified live: HTTP 200, data.data is a non-empty array of {assetId, name, isBillable, globalPrice}.")
     public void getAllReturnsAssets() {
@@ -33,7 +33,7 @@ public class AssetReadApiTest extends BaseApiTest {
         Assert.assertFalse(response.jsonPath().getList("data.data").isEmpty(), "data.data should be non-empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Asset by Asset ID returns a real asset's details")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Asset by Asset ID returns a real asset's details")
     @Story("Get Asset by Asset ID")
     @Description("Verified live: HTTP 200 for assetId=9, data.name/data.isBillable present.")
     public void getAssetByAssetIdReturnsDetails() {
@@ -44,7 +44,7 @@ public class AssetReadApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("data.name"));
     }
 
-    @Test(groups = {"api", "regression"}, description = "Get Standard Rates by Asset ID is rejected for a non-billable asset")
+    @Test(groups = { "regression"}, description = "Get Standard Rates by Asset ID is rejected for a non-billable asset")
     @Story("Get Standard Rates by Asset ID")
     @Description("Verified live: HTTP 400, message 'Only billable assets support standard rates' - assetId=9's " +
             "real isBillable=false in this QA tenant. This is the actual, observed behavior for the only asset " +
@@ -57,7 +57,7 @@ public class AssetReadApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Only billable assets support standard rates");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Template Location Wise returns an xlsx file")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Template Location Wise returns an xlsx file")
     @Story("Get Template Location Wise")
     @Description("Verified live: HTTP 200, response is a real xlsx file (ZIP signature), non-empty.")
     public void getTemplateLocationWiseReturnsXlsx() {
@@ -67,7 +67,7 @@ public class AssetReadApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Template file should not be empty");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Template Global Rates returns an xlsx file")
+    @Test(groups = { "sanity", "positive"}, description = "Get Template Global Rates returns an xlsx file")
     @Story("Get Template Global Rates")
     @Description("Verified live: HTTP 200, response is a real xlsx file (ZIP signature), non-empty.")
     public void getTemplateGlobalRatesReturnsXlsx() {
@@ -77,7 +77,7 @@ public class AssetReadApiTest extends BaseApiTest {
         Assert.assertTrue(response.getBody().asByteArray().length > 0, "Template file should not be empty");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get All without authentication fails")
+    @Test(groups = {"regression", "negative"}, description = "Get All without authentication fails")
     @Story("Get All")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAllWithoutAuthFails() {

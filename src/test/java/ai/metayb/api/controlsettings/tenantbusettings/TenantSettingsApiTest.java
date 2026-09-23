@@ -26,7 +26,7 @@ import static io.restassured.RestAssured.given;
 @Feature("Control Settings - Tenant & BU Settings")
 public class TenantSettingsApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get tenant settings returns the tenant's integration configuration")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get tenant settings returns the tenant's integration configuration")
     @Story("Tenant Settings")
     @Description("Verified live: HTTP 200, 'Tenant settings fetched successfully', with known integration " +
             "setting groups present (values are never asserted or logged - see class Javadoc).")
@@ -40,7 +40,7 @@ public class TenantSettingsApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.GOOGLE"), "Should include a GOOGLE settings group");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get tenant settings without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get tenant settings without authentication fails")
     @Story("Tenant Settings")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getTenantSettingsWithoutAuthFails() {

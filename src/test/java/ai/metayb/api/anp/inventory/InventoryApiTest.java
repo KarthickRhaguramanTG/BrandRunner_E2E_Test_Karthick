@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Inventory")
 public class InventoryApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get All returns the inventory listing")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get All returns the inventory listing")
     @Story("Get All")
     @Description("Verified live: HTTP 200, 'Inventory details fetched successfully', data.data is an array (empty in this QA tenant - asserted as observed).")
     public void getAllReturnsInventoryListing() {
@@ -30,7 +30,7 @@ public class InventoryApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getList("data.data"), "data.data should be a list (may be empty)");
     }
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Logs by Asset ID returns log history for a real asset")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Logs by Asset ID returns log history for a real asset")
     @Story("Get Logs by Asset ID")
     @Description("Verified live: HTTP 200 for assetId=9, 'Inventory logs fetched successfully', data.asset.assetId matches.")
     public void getLogsByAssetIdReturnsHistory() {
@@ -40,7 +40,7 @@ public class InventoryApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getInt("data.asset.assetId"), 9);
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get All without authentication fails")
+    @Test(groups = {"sanity", "regression", "negative"}, description = "Get All without authentication fails")
     @Story("Get All")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getAllWithoutAuthFails() {
@@ -50,7 +50,7 @@ public class InventoryApiTest extends BaseApiTest {
         Assert.assertEquals(response.jsonPath().getString("message"), "Authentication token missing");
     }
 
-    @Test(enabled = false, groups = {"api", "regression"},
+    @Test(enabled = false, groups ={"regression"},
             description = "BLOCKED: PUT /web/inventory/stock returns the CloudFront/S3 SPA fallback, not JSON")
     @Story("Update Stock")
     @Description("Blocked by environment - same systemic CloudFront/S3 SPA-fallback root cause confirmed " +

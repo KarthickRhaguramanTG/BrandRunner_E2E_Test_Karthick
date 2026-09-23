@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @Feature("ANP - Home Dashboard")
 public class HomeDashboardApiTest extends BaseApiTest {
 
-    @Test(groups = {"api", "smoke", "positive"}, description = "Get Counter returns tenant-wide summary counts")
+    @Test(groups = {"regression", "sanity", "positive"}, description = "Get Counter returns tenant-wide summary counts")
     @Story("Get Counter")
     @Description("Verified live: HTTP 200, 'Dashboard Data Fetched...', data with totalUsers/totalCompanies/totalProjects/totalTasks/totalMessages.")
     public void getCounterReturnsSummaryCounts() {
@@ -32,7 +32,7 @@ public class HomeDashboardApiTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().get("data.totalTasks"), "Response should include data.totalTasks");
     }
 
-    @Test(groups = {"api", "regression", "negative"}, description = "Get Counter without authentication fails")
+    @Test(groups = { "regression", "negative"}, description = "Get Counter without authentication fails")
     @Story("Get Counter")
     @Description("Verified live: HTTP 401, message 'Authentication token missing'.")
     public void getCounterWithoutAuthFails() {
